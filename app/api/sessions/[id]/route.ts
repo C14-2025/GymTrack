@@ -1,0 +1,42 @@
+import { type NextRequest, NextResponse } from "next/server"
+import { WorkoutSessionModel } from "@/lib/models/WorkoutSession"
+
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const id = Number.parseInt(params.id)
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
+    }
+
+    const session = WorkoutSessionModel.findByIdWithLogs(id)
+    if (!session) {
+      return NextResponse.json({ error: "Sessão de treino não encontrada" }, { status: 404 })
+    }
+
+    return NextResponse.json(session)
+  } catch (error) {
+    console.error("Error fetching workout session:", error)
+    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+  }
+}
+
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const id = Number.parseInt(params.id)
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
+    }
+
+    const body = await request.json()
+    const session = WorkoutSessionModel.update(id, body)
+
+    if (!session) {
+      return NextResponse.json({ error: "Sessão de treino não encontrada" }, { status: 404 })
+    }
+
+    return NextResponse.json(session)
+  } catch (error) {
+    console.error("Error updating workout session:", error)
+    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+  }
+}
