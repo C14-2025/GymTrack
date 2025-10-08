@@ -21,26 +21,26 @@ GymTrack é um sistema completo para gerenciamento de treinos de academia, desen
 ## 📦 Instalação
 
 1. Clone o repositório:
-\`\`\`bash
+```bash
 git clone https://github.com/seu-usuario/gymtrack.git
 cd gymtrack
-\`\`\`
+```
 
 2. Instale as dependências:
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 3. Execute o projeto:
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 4. Acesse http://localhost:3000
 
 ## 🧪 Testes
 
-\`\`\`bash
+```
 # Executar todos os testes
 npm test
 
@@ -49,11 +49,11 @@ npm run test:watch
 
 # Executar testes com coverage
 npm run test:coverage
-\`\`\`
+```
 
 ## 📊 Estrutura do Projeto
 
-\`\`\`
+```
 gymtrack/
 ├── app/                    # Páginas e API routes (App Router)
 │   ├── api/               # Endpoints da API
@@ -67,7 +67,7 @@ gymtrack/
 │   └── database.ts       # Configuração do banco
 ├── __tests__/            # Testes unitários e de integração
 └── scripts/              # Scripts de banco de dados
-\`\`\`
+```
 
 ## 🔧 Scripts Disponíveis
 
