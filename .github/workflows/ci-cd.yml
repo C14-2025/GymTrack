@@ -46,7 +46,7 @@ jobs:
           npm install
       - name: Rodar testes unitários
         run: |
-          npm test --junitxml=report.xml --cov=. --cov-report=xml
+          npm tests --junitxml=report.xml --cov=. --cov-report=xml
 
       - name: Upload relatório de testes
         uses: actions/upload-artifact@v4
