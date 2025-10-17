@@ -43,15 +43,15 @@ jobs:
 
       - name: Instalar dependências
         run: |
-          npm install
+          npm ci
       - name: Rodar testes unitários
         run: |
-          npm tests --junitxml=report.xml --cov=. --cov-report=xml
+          npx jest --ci --coverage --coverageReporters=lcov --coverageReporters=text
 
       - name: Upload relatório de testes
         uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: |
-            report.xml
-            coverage.xml
+            report/
+            coverage/
