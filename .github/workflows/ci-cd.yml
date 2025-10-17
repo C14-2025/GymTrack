@@ -27,3 +27,30 @@ jobs:
       with:
         name: nextjs-build
         path: ./ 
+
+tests:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Ambiente
+        uses: actions/setup-node@v4
+        with:
+          node-version:  '20.x'
+
+      - name: Instalar dependências
+        run: |
+          npm install
+      - name: Rodar testes unitários
+        run: |
+          npm test --junitxml=report.xml --cov=. --cov-report=xml
+
+      - name: Upload relatório de testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: |
+            report.xml
+            coverage.xml
