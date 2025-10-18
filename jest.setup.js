@@ -1,29 +1,26 @@
+
 import "@testing-library/jest-dom" 
-
-
 try {
+  const NextServerWeb = require('next/server');
 
-  const NextWeb = require('next/dist/server/web/spec-extension/request');
+  if (typeof global.Request === 'undefined' && NextServerWeb.Request) {
+      global.Request = NextServerWeb.Request;
+  }
+  if (typeof global.Response === 'undefined' && NextServerWeb.Response) {
+      global.Response = NextServerWeb.Response;
+  }
+  if (typeof global.NextRequest === 'undefined' && NextServerWeb.NextRequest) {
+      global.NextRequest = NextServerWeb.NextRequest;
+  }
 
-  if (typeof Request === 'undefined') {
-    global.Request = NextWeb.Request;
-  }
-  if (typeof NextRequest === 'undefined') {
-    global.NextRequest = NextWeb.NextRequest;
-  }
-
-  const ResponseWeb = require('next/dist/server/web/spec-extension/response');
-  if (typeof Response === 'undefined') {
-    global.Response = ResponseWeb.Response;
-  }
 } catch (e) {
-  console.warn("Falha ao configurar mocks de Request/Response do Next.js. Certifique-se de usar 'NextRequest' em seus testes de API.");
+  console.warn("Falha ao carregar Next.js Web Globals. O ambiente Jest está muito restrito.");
 }
 
-if (typeof URL === 'undefined') {
+if (typeof global.URL === 'undefined') {
     global.URL = require('url').URL;
 }
 
-if (typeof fetch === 'undefined') {
+if (typeof global.fetch === 'undefined') {
     global.fetch = jest.fn();
 }
