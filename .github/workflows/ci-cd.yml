@@ -61,6 +61,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Rodar auditoria de segurança
+      - name: Checar codigo
+
+      - uses: actions/setup-node@v4
+        name: Configurar Node.js
+
+        with:
+          node-version: '20' 
+          cache: 'npm'
+
+      - name: Instalar Dependências
+        run: npm ci
+
+      - name: Rodar auditoria de segurança 
         run: npm audit --audit-level=moderate
