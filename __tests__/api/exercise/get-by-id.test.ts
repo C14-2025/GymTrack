@@ -1,35 +1,51 @@
-// import { GET } from "@/app/api/exercises/[id]/route"
-// import { ExerciseModel } from "@/lib/models/Exercise"
 
-// jest.mock("@/lib/models/Exercise", () => ({
-//   ExerciseModel: {
-//     findById: jest.fn(),
-//   },
-// }))
+import { GET } from "@/app/api/exercises/[id]/route"
+import { ExerciseModel } from "@/lib/models/Exercise"
 
-// describe("GET /api/exercises/:id", () => {
-//   beforeEach(() => {
-//     jest.clearAllMocks()
-//   })
+import { NextRequest } from "next/server" 
 
-//   it("retorna exercício válido", async () => {
-//     ;(ExerciseModel.findById as jest.Mock).mockReturnValue({
-//       id: 1,
-//       name: "Agachamento",
-//     })
+jest.mock("@/lib/models/Exercise", () => ({
+  ExerciseModel: {
+    findById: jest.fn(),
+  },
+}))
 
-//     const response = await GET({} as any, { params: { id: "1" } })
-//     const data = await response.json()
+describe("GET /api/exercises/:id", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-//     expect(response.status).toBe(200)
-//     expect(data.name).toBe("Agachamento")
-//   })
 
-//   it("retorna erro para ID inválido", async () => {
-//     const response = await GET({} as any, { params: { id: "abc" } })
-//     const data = await response.json()
+  const mockRequest = (id: string) => {
+    return new NextRequest(`http://localhost/api/exercises/${id}`)
+  }
 
-//     expect(response.status).toBe(400)
-//     expect(data.error).toBe("ID inválido")
-//   })
-// })
+  it("retorna exercício válido (200)", async () => {
+    // Arrange
+    const id = "1"
+    ;(ExerciseModel.findById as jest.Mock).mockReturnValue({
+      id: 1,
+      name: "Agachamento",
+    })
+
+    const response = await GET(mockRequest(id), { params: { id: id } }) 
+    const data = await response.json()
+
+
+    expect(response.status).toBe(200)
+    expect(data.name).toBe("Agachamento")
+    expect(ExerciseModel.findById).toHaveBeenCalledWith(parseInt(id))
+  })
+
+  it("retorna erro para ID inválido (400)", async () => {
+
+    const id = "abc"
+
+    const response = await GET(mockRequest(id), { params: { id: id } })
+    const data = await response.json()
+
+
+    expect(response.status).toBe(400)
+    expect(data.error).toBe("ID inválido") 
+  })
+})
