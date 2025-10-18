@@ -55,6 +55,19 @@ jobs:
           path: |
             report/
             coverage/
+    docs:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v4
+       - name: Gerar documentação
+        run: npx jsdoc -c jsdoc.json
+       - name: Publicar no GitHub Pages
+       - name: Instalar dependências
+         run: npm ci
+         uses: peaceiris/actions-gh-pages@v4
+         with:
+           github_token: ${{ secrets.GITHUB_TOKEN }}
+           publish_dir: ./out
   # Devido algumas falhas serem encontradas, vamos utilizar essse JOB apos a correção das falhas       
   # security-scan:
     # needs : tests
