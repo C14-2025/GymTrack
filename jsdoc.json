@@ -1,14 +1,22 @@
 {
   "source": {
-    "include": ["app", "components", "hooks", "lib", "scripts", "styles"],
-    "includePattern": ".+\\.(js|jsx|ts|tsx)$",
-    "excludePattern": "(node_modules|dist)"
+    "include": [
+      "app",
+      "components",
+      "hooks",
+      "lib"
+    ],
+    "includePattern": ".+\\.(js|jsx|ts|tsx)$", 
+    "excludePattern": "(^|\\/|\\\\)_"
   },
+  "plugins": [
+    "plugins/markdown",
+    "@jsdoc/plugin-typescript" 
+  ],
   "opts": {
-    "destination": "./docs",
-    "recurse": true,
-    "verbose": true,
     "encoding": "utf8",
-    "template": "templates/default"
+    "destination": "./docs",
+    "recurse": true
+    // Adicione outras opções que você já tinha aqui, como template, etc.
   }
 }
