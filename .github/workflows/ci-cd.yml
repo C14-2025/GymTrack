@@ -11,23 +11,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: set up Node
-      uses: actions/setup-node@v4
-      with:
-        node-version:  '20.x'
-        cache: 'npm' 
-    - name: Build in node
-      run: |
-        npm install
-        npm run build
-        
-    - name: Upload Build
-      uses: actions/upload-artifact@v4
-      with:
-        name: nextjs-build
-        path: ./ 
+      - uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Build in Node
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build
+          path: ./
 
   tests:
     runs-on: ubuntu-latest
@@ -39,11 +40,11 @@ jobs:
       - name: Configurar Ambiente
         uses: actions/setup-node@v4
         with:
-          node-version:  '20.x'
+          node-version: '20.x'
 
       - name: Instalar dependências
-        run: |
-          npm ci
+        run: npm ci
+
       - name: Rodar testes unitários
         run: |
           npx jest --ci --coverage --coverageReporters=lcov --coverageReporters=text
@@ -55,35 +56,34 @@ jobs:
           path: |
             report/
             coverage/
-    docs:
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v4
-       - name: Gerar documentação
+
+  docs:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar documentação
         run: npx jsdoc -c jsdoc.json
-       - name: Publicar no GitHub Pages
-       - name: Instalar dependências
-         run: npm ci
-         uses: peaceiris/actions-gh-pages@v4
-         with:
-           github_token: ${{ secrets.GITHUB_TOKEN }}
-           publish_dir: ./out
-  # Devido algumas falhas serem encontradas, vamos utilizar essse JOB apos a correção das falhas       
-  # security-scan:
-    # needs : tests
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: Checkout código
-    #     uses: actions/checkout@v4
-      
-    #   - name: Configurar Node.js
-    #     uses: actions/setup-node@v4
-    #     with:
-    #       node-version: '20' 
-    #       cache: 'npm'
 
-    #   - name: Instalar Dependências
-    #     run: npm ci
+      - name: Publicar no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
 
-    #   - name: Rodar auditoria de segurança 
-    #     run: npm audit --audit-level=moderate
+  notify:
+    runs-on: ubuntu-latest
+    needs: [build, tests, docs] # Corrigido (antes tinha "buid" e "security-scan")
+    steps:
+      - name: Instalar mailutils
+        run: sudo apt-get update && sudo apt-get install -y mailutils
+
+      - name: Enviar notificação por e-mail
+        run: |
+          echo "Pipeline executado com sucesso no branch main ✅" | mail -s "CI/CD Status" "$EMAIL_TO"
+        env:
+          EMAIL_TO: ${{ secrets.NOTIFY_EMAIL }}
