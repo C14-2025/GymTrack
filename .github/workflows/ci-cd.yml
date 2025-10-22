@@ -72,7 +72,7 @@ jobs:
         run: npx jsdoc -c jsdoc.json
 
       - name: Publicar no GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: actions/upload-artifact@v4
         with:
           name: Documentação
           path: |
