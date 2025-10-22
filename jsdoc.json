@@ -17,6 +17,5 @@
     "encoding": "utf8",
     "destination": "./docs",
     "recurse": true
-    // Adicione outras opções que você já tinha aqui, como template, etc.
   }
 }
