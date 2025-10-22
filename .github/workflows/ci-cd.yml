@@ -43,7 +43,8 @@ jobs:
           node-version: '20.x'
 
       - name: Instalar dependências
-        run: npm ci
+        run: |
+          npm ci
 
       - name: Rodar testes unitários
         run: |
