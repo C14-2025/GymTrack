@@ -66,6 +66,7 @@
     "zod": "3.25.67"
   },
   "devDependencies": {
+    "jsdoc": "3.6.7",
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
