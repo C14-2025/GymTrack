@@ -44,7 +44,6 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
-             npm install --save-dev jsdoc
 
       - name: Rodar testes unitários
         run: |
