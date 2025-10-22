@@ -63,20 +63,22 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0 
+          
       - name: Instalar dependências
         run: npm install --save-dev jsdoc
-      - name: Instalar JSDoc (se não estiver nas devDependencies)
-        run: npm install --save-dev jsdoc
+  
       - name: Gerar documentação
         run: npx jsdoc -c jsdoc.json
 
-      - name: Publicar no GitHub Pages
-        uses: actions/upload-artifact@v4
-        with:
-          name: Documentação
-          path: |
-            DOC/
+      - name: Commitar documentação gerada
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add out
+          git commit -m "📚 Atualiza documentação gerada automaticamente [skip ci]" || echo "Sem alterações na doc"
+          git push
             
 
   notify:
