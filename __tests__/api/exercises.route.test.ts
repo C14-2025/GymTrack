@@ -1,5 +1,3 @@
-// __tests__/api/exercises.route.test.ts
-// Registro do mock do next/server primeiro (evita Request undefined)
 jest.doMock('next/server', () => ({
   __esModule: true,
   NextRequest: class MockNextRequest { constructor(init?: any){ this._body = init?.body } async json(){ return this._body ?? null } },
@@ -8,7 +6,6 @@ jest.doMock('next/server', () => ({
   }
 }))
 
-// Registrar mock do model ANTES de carregar o route
 jest.doMock('../../lib/models/Exercise', () => {
   return {
     __esModule: true,
@@ -23,8 +20,6 @@ jest.doMock('../../lib/models/Exercise', () => {
 })
 
 describe('API /api/exercises route', () => {
-  // carregar módulos após os mocks estarem registrados
-  // (require ao invés de import para garantir ordem)
   const { GET, POST } = require('../../app/api/exercises/route')
   const { ExerciseModel } = require('../../lib/models/Exercise')
 
