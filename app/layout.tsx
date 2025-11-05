@@ -8,7 +8,6 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "GymTrack - Gerenciamento de Treinos",
   description: "Sistema completo para gerenciar exercícios, fichas de treino e acompanhar seu progresso fitness",
-  generator: "v0.app",
 }
 
 export default function RootLayout({
