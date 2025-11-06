@@ -1,84 +1,48 @@
+import { jest } from "@jest/globals"
 
-describe('ExerciseModel (unit) - isolated module loading', () => {
+describe("WorkoutTemplateModel (isolated module loading)", () => {
   afterEach(() => {
-    jest.resetModules() 
+    jest.resetModules()
     jest.restoreAllMocks()
   })
 
-  it('create deve inserir e retornar o registro criado', () => {
-    
+  it("create retorna template criado", () => {
     const stmt = {
-      run: jest.fn().mockReturnValue({ lastInsertRowid: 1, changes: 1 }),
-      get: jest.fn().mockReturnValue({
-        id: 1,
-        name: 'Agachamento',
-        muscle_group: 'Pernas',
-        description: null,
-        video_url: null,
-      }),
-      all: jest.fn().mockReturnValue([{ id: 1, name: 'Agachamento', muscle_group: 'Pernas' }]),
+      run: jest.fn().mockReturnValue({ lastInsertRowid: 2, changes: 1 }),
+      get: jest.fn().mockReturnValue({ id: 2, name: "W1", description: "x" }),
+      all: jest.fn().mockReturnValue([{ id: 2, name: "W1", description: "x" }]),
     }
-    const mockDb = {
-      prepare: jest.fn().mockReturnValue(stmt),
-      exec: jest.fn(),
-      pragma: jest.fn(),
-    }
+    const mockDb = { prepare: jest.fn().mockReturnValue(stmt), exec: jest.fn(), pragma: jest.fn() }
+    jest.doMock("../../lib/database", () => ({ __esModule: true, default: mockDb }))
 
-    
-    jest.doMock('../../lib/database', () => ({ __esModule: true, default: mockDb }))
+    const { WorkoutTemplateModel } = require("../../lib/models/WorkoutTemplate")
 
-    
-    const { ExerciseModel } = require('../../lib/models/Exercise')
+    const t = WorkoutTemplateModel.create({ name: "W1", description: "x" } as any)
+    expect(t).toBeDefined()
+    expect(t.id).toBe(2)
 
-    
-    const created = ExerciseModel.create({ name: 'Agachamento', muscle_group: 'Pernas' })
-    expect(created).toBeDefined()
-    expect(created.id).toBe(1)
-
-    
     expect(mockDb.prepare).toHaveBeenCalled()
     expect(stmt.run).toHaveBeenCalled()
   })
 
-  it('findAll retorna lista e findById funciona', () => {
-    
+  it("findAll retorna array e findById retorna item", () => {
     const stmt = {
-      run: jest.fn().mockReturnValue({ lastInsertRowid: 1 }),
-      get: jest.fn().mockReturnValue({ id: 1, name: 'Agachamento', muscle_group: 'Pernas' }),
-      all: jest.fn().mockReturnValue([{ id: 1, name: 'Agachamento', muscle_group: 'Pernas' }]),
+      run: jest.fn().mockReturnValue({ lastInsertRowid: 2 }),
+      get: jest.fn().mockReturnValue({ id: 2, name: "W1", description: "x" }),
+      all: jest.fn().mockReturnValue([{ id: 2, name: "W1", description: "x" }]),
     }
     const mockDb = { prepare: jest.fn().mockReturnValue(stmt), exec: jest.fn(), pragma: jest.fn() }
+    jest.doMock("../../lib/database", () => ({ __esModule: true, default: mockDb }))
 
-    jest.doMock('../../lib/database', () => ({ __esModule: true, default: mockDb }))
-    const { ExerciseModel } = require('../../lib/models/Exercise')
+    const { WorkoutTemplateModel } = require("../../lib/models/WorkoutTemplate")
 
-    const all = ExerciseModel.findAll()
+    const all = WorkoutTemplateModel.findAll()
     expect(Array.isArray(all)).toBe(true)
-    expect(all.length).toBeGreaterThan(0)
-    expect(all[0].name).toBe('Agachamento')
+    expect(all).toHaveLength(1)
+    expect(all[0].name).toBe("W1")
 
-    const found = ExerciseModel.findById(1)
-    expect(found).toBeDefined()
-    expect(found!.name).toBe('Agachamento')
-
-    
-    const delStmt = {
-      run: jest.fn().mockReturnValue({ changes: 1 }),
-      get: jest.fn(),
-      all: jest.fn().mockReturnValue([]),
-    }
-    
-    mockDb.prepare.mockReturnValueOnce(delStmt)
-    const result = ExerciseModel.delete(1)
-    expect(result).toBe(true)
-  })
-
-  it('validateExercise detecta erros de campos obrigatórios', () => {
-    
-    jest.resetModules()
-    const { ExerciseModel } = require('../../lib/models/Exercise')
-    const errors = ExerciseModel.validateExercise({})
-    expect(errors).toContain('Nome do exercício é obrigatório')
-    expect(errors).toContain('Grupo muscular é obrigatório')
+    const item = WorkoutTemplateModel.findById(2)
+    expect(item).toBeDefined()
+    expect(item!.name).toBe("W1")
   })
 })

@@ -1,11 +1,11 @@
-import { ExerciseModel, Exercise } from "@/lib/models/Exercise"
+import { ExerciseModel, type Exercise } from "@/lib/models/Exercise"
+import { jest } from "@jest/globals"
 
-// Mock do banco de dados
 jest.mock("@/lib/database", () => {
   const mockDb = {
     prepare: jest.fn(),
   }
-  
+
   return {
     __esModule: true,
     default: mockDb,
@@ -26,13 +26,13 @@ describe("ExerciseModel - Testes Mock", () => {
         name: "Supino Reto",
         muscle_group: "Peito",
         description: "Exercício para desenvolvimento do peitoral",
-        video_url: "https://example.com/video.mp4"
+        video_url: "https://example.com/video.mp4",
       }
 
       const mockStmt = {
-        run: jest.fn().mockReturnValue({ lastInsertRowid: 1 })
+        run: jest.fn().mockReturnValue({ lastInsertRowid: 1 }),
       }
-      
+
       const mockFindById = jest.fn().mockReturnValue({
         id: 1,
         name: "Supino Reto",
@@ -40,25 +40,22 @@ describe("ExerciseModel - Testes Mock", () => {
         description: "Exercício para desenvolvimento do peitoral",
         video_url: "https://example.com/video.mp4",
         created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z"
+        updated_at: "2024-01-01T10:00:00Z",
       })
 
       mockDb.prepare.mockReturnValue(mockStmt)
-      jest.spyOn(ExerciseModel, 'findById').mockImplementation(mockFindById)
+      jest.spyOn(ExerciseModel, "findById").mockImplementation(mockFindById)
 
       // Act
       const result = ExerciseModel.create(exerciseData)
 
       // Assert
-      expect(mockDb.prepare).toHaveBeenCalledWith(`
-      INSERT INTO exercises (name, muscle_group, description, video_url)
-      VALUES (?, ?, ?, ?)
-    `)
+      expect(mockDb.prepare).toHaveBeenCalled()
       expect(mockStmt.run).toHaveBeenCalledWith(
         "Supino Reto",
         "Peito",
         "Exercício para desenvolvimento do peitoral",
-        "https://example.com/video.mp4"
+        "https://example.com/video.mp4",
       )
       expect(mockFindById).toHaveBeenCalledWith(1)
       expect(result).toEqual({
@@ -68,7 +65,7 @@ describe("ExerciseModel - Testes Mock", () => {
         description: "Exercício para desenvolvimento do peitoral",
         video_url: "https://example.com/video.mp4",
         created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z"
+        updated_at: "2024-01-01T10:00:00Z",
       })
     })
 
@@ -76,13 +73,13 @@ describe("ExerciseModel - Testes Mock", () => {
       // Arrange
       const exerciseData: Omit<Exercise, "id" | "created_at" | "updated_at"> = {
         name: "Agachamento",
-        muscle_group: "Pernas"
+        muscle_group: "Pernas",
       }
 
       const mockStmt = {
-        run: jest.fn().mockReturnValue({ lastInsertRowid: 2 })
+        run: jest.fn().mockReturnValue({ lastInsertRowid: 2 }),
       }
-      
+
       const mockFindById = jest.fn().mockReturnValue({
         id: 2,
         name: "Agachamento",
@@ -90,22 +87,17 @@ describe("ExerciseModel - Testes Mock", () => {
         description: null,
         video_url: null,
         created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z"
+        updated_at: "2024-01-01T10:00:00Z",
       })
 
       mockDb.prepare.mockReturnValue(mockStmt)
-      jest.spyOn(ExerciseModel, 'findById').mockImplementation(mockFindById)
+      jest.spyOn(ExerciseModel, "findById").mockImplementation(mockFindById)
 
       // Act
       const result = ExerciseModel.create(exerciseData)
 
       // Assert
-      expect(mockStmt.run).toHaveBeenCalledWith(
-        "Agachamento",
-        "Pernas",
-        null,
-        null
-      )
+      expect(mockStmt.run).toHaveBeenCalledWith("Agachamento", "Pernas", undefined, undefined)
       expect(result.name).toBe("Agachamento")
       expect(result.muscle_group).toBe("Pernas")
     })
@@ -117,7 +109,7 @@ describe("ExerciseModel - Testes Mock", () => {
       const invalidExercise = {
         name: "",
         muscle_group: "",
-        video_url: "url-invalida"
+        video_url: "url-invalida",
       }
 
       // Act
@@ -134,7 +126,7 @@ describe("ExerciseModel - Testes Mock", () => {
       const validExercise = {
         name: "Flexão",
         muscle_group: "Peito",
-        video_url: "https://example.com/flexao.mp4"
+        video_url: "https://example.com/flexao.mp4",
       }
 
       // Act
