@@ -1,16 +1,17 @@
-pipeline{
+pipeline {
     agent any
 
     stages {
-        stage('Bild Docker Image'){
-            staps{
+        stage('Build Docker Image'){
+            steps{
                 script{
-                    dockerapp = docker.build("C14-2025/GymTrack:${env.BUILD_ID}",'.')
+                    dockerapp = docker.build("C14-2025/GymTrack:${env.BUILD_ID}", '.')
                 }
             }
         }
-        stage('Push Doker Image'){
-            staps{
+        
+        stage('Push Docker Image'){
+            steps{
                 script{
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
                         dockerapp.push('latest')
@@ -20,5 +21,4 @@ pipeline{
             }
         }
     }
-
 }
