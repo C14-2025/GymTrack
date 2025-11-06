@@ -14,7 +14,7 @@ jest.mock("next/server", () => ({
 import db from "@/lib/database";
 import { POST, GET } from "@/app/api/sessions/route";
 
-// Função util para criar request mockado
+
 function createRequest(method: string, body?: any) {
   return {
     method,
@@ -23,14 +23,14 @@ function createRequest(method: string, body?: any) {
 }
 
 beforeEach(() => {
-  // Limpa tabelas necessárias
+
   db.exec("DELETE FROM exercise_logs");
   db.exec("DELETE FROM workout_sessions");
   db.exec("DELETE FROM workout_template_exercises");
   db.exec("DELETE FROM exercises");
   db.exec("DELETE FROM workout_templates");
 
-  // ✅ Reinsere template necessário para testes
+
   db.prepare(
     "INSERT INTO workout_templates (id, name) VALUES (1, 'Treino Teste')"
   ).run();
@@ -69,7 +69,7 @@ describe("API /api/sessions", () => {
   });
 
   test("GET deve listar sessões", async () => {
-    // ✅ Criar uma sessão manualmente para o GET ter algo pra retornar
+ 
     db.prepare(`
       INSERT INTO workout_sessions (workout_template_id, date, duration_minutes, notes)
       VALUES (1, '2024-01-01', 50, 'teste')

@@ -1,5 +1,4 @@
 // __tests__/api/workouts.route.test.ts
-// registra mocks ANTES de carregar qualquer módulo
 jest.doMock('next/server', () => ({
   __esModule: true,
   NextRequest: class MockNextRequest { constructor(init?: any){ this._body = init?.body } async json(){ return this._body ?? null } },
