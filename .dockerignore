@@ -1,0 +1,42 @@
+# Dependências e Builds Locais
+
+# Evita que o Docker copie a pasta de dependências já instalada
+# A instalação será feita DENTRO do container
+node_modules
+
+# Arquivos de build do Next.js
+.next
+
+# Arquivos de build e cache temporários
+.turbo
+dist
+out
+build
+
+# Arquivos Temporários e de Configuração do Sistema
+tmp
+temp
+.cache
+.DS_Store
+
+# Logs e Dados de Sessão
+logs
+*.log
+npm-debug.log*
+
+# Variáveis de Ambiente e Segredos (CRÍTICO)
+.env
+.env.local
+.env.production
+.env.development
+
+# Ferramentas de Teste e Edição
+coverage
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+.git
+.gitignore
+
+pnpm-lock.yaml
