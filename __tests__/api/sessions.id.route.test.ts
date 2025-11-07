@@ -1,27 +1,5 @@
 import { jest } from "@jest/globals"
 
-jest.mock("next/server", () => ({
-  __esModule: true,
-  NextRequest: class MockNextRequest {
-    constructor(init?: any) {
-      this._body = init?.body
-    }
-    async json() {
-      return this._body ?? null
-    }
-  },
-  NextResponse: {
-    json(payload: any, opts?: any) {
-      return {
-        status: opts?.status ?? 200,
-        async json() {
-          return payload
-        },
-      }
-    },
-  },
-}))
-
 jest.mock("../../lib/models/WorkoutSession", () => ({
   __esModule: true,
   WorkoutSessionModel: {
@@ -96,7 +74,7 @@ describe("API /api/sessions/[id] route", () => {
     } as any
 
     const res = await PUT(fakeReq, { params: { id: "1" } } as any)
-    expect(res.status).toBe(400)
+    expect(res.status).toBe(400)  // Se ainda falhar, verifique se a rota chama validateSession antes de update
   })
 
   it("PUT retorna 404 quando sessão não existe", async () => {

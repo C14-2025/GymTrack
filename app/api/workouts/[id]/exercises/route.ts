@@ -27,3 +27,27 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
     return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const workoutId = Number.parseInt(params.id)
+    if (isNaN(workoutId)) {
+      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
+    }
+
+    const body = await request.json()
+    if (!body.exercise_id) {
+      return NextResponse.json({ error: "exercise_id é obrigatório" }, { status: 400 })
+    }
+
+    const success = WorkoutTemplateModel.removeExercise(workoutId, body.exercise_id)
+    if (!success) {
+      return NextResponse.json({ error: "Exercício não encontrado no template" }, { status: 404 })
+    }
+
+    return NextResponse.json({ message: "Exercício removido com sucesso" })
+  } catch (error) {
+    console.error("Error removing exercise from workout:", error)
+    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+  }
+}

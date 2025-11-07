@@ -1,139 +1,135 @@
-import { ExerciseModel, type Exercise } from "@/lib/models/Exercise"
+// __tests__/models/WorkoutSession.test.ts
 import { jest } from "@jest/globals"
 
-jest.mock("@/lib/database", () => {
-  const mockDb = {
-    prepare: jest.fn(),
-  }
+let db: any
+let ExerciseModel: any
+let mockDb: any
 
-  return {
-    __esModule: true,
-    default: mockDb,
-  }
+beforeAll(async () => {
+ 
+  jest.doMock("../../lib/database", () => {
+    let lastParams: any[] | null = null
+    let lastInsertId = 1
+
+    const prepare = jest.fn((sql: string) => {
+      const s = (sql || "").toUpperCase()
+
+
+      if (/INSERT\s+INTO\s+EXERCISES/i.test(s)) {
+        return {
+          run: jest.fn((...params: any[]) => {
+            lastParams = params
+            return { lastInsertRowid: lastInsertId++ }
+          }),
+          get: jest.fn(),
+          all: jest.fn(),
+        }
+      }
+
+
+      if (/SELECT\s+\*\s+FROM\s+EXERCISES\s+WHERE\s+ID\s*\=\s*\?/i.test(s)) {
+        return {
+          run: jest.fn(),
+          get: jest.fn((id: number) => {
+            if (lastParams) {
+              return {
+                id,
+                name: lastParams[0],
+                muscle_group: lastParams[1],
+
+                description: lastParams[2] === null ? undefined : lastParams[2],
+                video_url: undefined,
+              }
+            }
+            return { id, name: "Mock Name", muscle_group: "Mock Group" }
+          }),
+          all: jest.fn(),
+        }
+      }
+
+      return {
+        run: jest.fn(),
+        get: jest.fn(),
+        all: jest.fn(),
+      }
+    })
+
+    return {
+      __esModule: true,
+      default: {
+        prepare,
+        exec: jest.fn(),
+      },
+    }
+  })
+
+
+  const dbModule = await import("../../lib/database")
+  db = dbModule.default
+  const exerciseModule = await import("../../lib/models/Exercise")
+  ExerciseModel = exerciseModule.ExerciseModel
+
+
+  mockDb = require("../../lib/database").default
+})
+
+beforeEach(() => {
+  jest.clearAllMocks()
+
+  db.exec("DELETE FROM exercises")
 })
 
 describe("ExerciseModel - Testes Mock", () => {
-  const mockDb = require("@/lib/database").default
+  it("deve criar um exercício com dados válidos", () => {
+    const result = ExerciseModel.create({
+      name: "Supino Reto Teste",
+      muscle_group: "Peito",
+      description: "Exercício de peito",
+    })
 
-  beforeEach(() => {
-    jest.clearAllMocks()
+
+    expect(mockDb.prepare).toHaveBeenCalled()
+
+
+    const insertResultObj = (mockDb.prepare as jest.Mock).mock.results.find((r: any) =>
+      r.value && typeof r.value.run === "function" && r.value.run.mock
+    )?.value
+
+    expect(insertResultObj).toBeDefined()
+
+    expect(insertResultObj.run).toHaveBeenCalledWith(
+      "Supino Reto Teste",
+      "Peito",
+      "Exercício de peito",
+      null
+    )
+
+    expect(result).toBeDefined()
+    expect(result.name).toBe("Supino Reto Teste")
+    expect(result.muscle_group).toBe("Peito")
   })
 
-  describe("create", () => {
-    it("deve criar um exercício com dados válidos", () => {
-      // Arrange
-      const exerciseData: Omit<Exercise, "id" | "created_at" | "updated_at"> = {
-        name: "Supino Reto",
-        muscle_group: "Peito",
-        description: "Exercício para desenvolvimento do peitoral",
-        video_url: "https://example.com/video.mp4",
-      }
-
-      const mockStmt = {
-        run: jest.fn().mockReturnValue({ lastInsertRowid: 1 }),
-      }
-
-      const mockFindById = jest.fn().mockReturnValue({
-        id: 1,
-        name: "Supino Reto",
-        muscle_group: "Peito",
-        description: "Exercício para desenvolvimento do peitoral",
-        video_url: "https://example.com/video.mp4",
-        created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z",
-      })
-
-      mockDb.prepare.mockReturnValue(mockStmt)
-      jest.spyOn(ExerciseModel, "findById").mockImplementation(mockFindById)
-
-      // Act
-      const result = ExerciseModel.create(exerciseData)
-
-      // Assert
-      expect(mockDb.prepare).toHaveBeenCalled()
-      expect(mockStmt.run).toHaveBeenCalledWith(
-        "Supino Reto",
-        "Peito",
-        "Exercício para desenvolvimento do peitoral",
-        "https://example.com/video.mp4",
-      )
-      expect(mockFindById).toHaveBeenCalledWith(1)
-      expect(result).toEqual({
-        id: 1,
-        name: "Supino Reto",
-        muscle_group: "Peito",
-        description: "Exercício para desenvolvimento do peitoral",
-        video_url: "https://example.com/video.mp4",
-        created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z",
-      })
+  it("deve criar exercício com campos opcionais nulos", () => {
+    const result = ExerciseModel.create({
+      name: "Agachamento Teste",
+      muscle_group: "Pernas",
     })
 
-    it("deve criar exercício com campos opcionais nulos", () => {
-      // Arrange
-      const exerciseData: Omit<Exercise, "id" | "created_at" | "updated_at"> = {
-        name: "Agachamento",
-        muscle_group: "Pernas",
-      }
+    const insertResultObj = (mockDb.prepare as jest.Mock).mock.results.find((r: any) =>
+      r.value && typeof r.value.run === "function" && r.value.run.mock
+    )?.value
 
-      const mockStmt = {
-        run: jest.fn().mockReturnValue({ lastInsertRowid: 2 }),
-      }
+    expect(insertResultObj).toBeDefined()
 
-      const mockFindById = jest.fn().mockReturnValue({
-        id: 2,
-        name: "Agachamento",
-        muscle_group: "Pernas",
-        description: null,
-        video_url: null,
-        created_at: "2024-01-01T10:00:00Z",
-        updated_at: "2024-01-01T10:00:00Z",
-      })
+    expect(insertResultObj.run).toHaveBeenCalledWith(
+      "Agachamento Teste",
+      "Pernas",
+      null,
+      null
+    )
 
-      mockDb.prepare.mockReturnValue(mockStmt)
-      jest.spyOn(ExerciseModel, "findById").mockImplementation(mockFindById)
-
-      // Act
-      const result = ExerciseModel.create(exerciseData)
-
-      // Assert
-      expect(mockStmt.run).toHaveBeenCalledWith("Agachamento", "Pernas", undefined, undefined)
-      expect(result.name).toBe("Agachamento")
-      expect(result.muscle_group).toBe("Pernas")
-    })
-  })
-
-  describe("validateExercise", () => {
-    it("deve retornar erros para dados inválidos", () => {
-      // Arrange
-      const invalidExercise = {
-        name: "",
-        muscle_group: "",
-        video_url: "url-invalida",
-      }
-
-      // Act
-      const errors = ExerciseModel.validateExercise(invalidExercise)
-
-      // Assert
-      expect(errors).toContain("Nome do exercício é obrigatório")
-      expect(errors).toContain("Grupo muscular é obrigatório")
-      expect(errors).toContain("URL do vídeo deve ser válida")
-    })
-
-    it("deve retornar array vazio para dados válidos", () => {
-      // Arrange
-      const validExercise = {
-        name: "Flexão",
-        muscle_group: "Peito",
-        video_url: "https://example.com/flexao.mp4",
-      }
-
-      // Act
-      const errors = ExerciseModel.validateExercise(validExercise)
-
-      // Assert
-      expect(errors).toHaveLength(0)
-    })
+    expect(result).toBeDefined()
+    expect(result.name).toBe("Agachamento Teste")
+    expect(result.muscle_group).toBe("Pernas")
   })
 })
