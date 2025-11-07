@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>24/30</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>24/30</span>
+                <span class='fraction'>30/30</span>
             </div>
         
             
@@ -117,14 +117,14 @@
 <a name='L52'></a><a href='#L52'>52</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
@@ -139,30 +139,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type NextRequest, NextResponse } from "next/server"
@@ -171,8 +171,8 @@ import { ExerciseLogModel } from "@/lib/models/WorkoutSession"
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const id = Number.parseInt(params.id)
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (isNaN(id)) {
-<span class="cstat-no" title="statement not covered" >      return NextResponse.json({ error: "ID inválido" }, { status: 400 })</span>
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 &nbsp;
     const body = await request.json()
@@ -190,16 +190,16 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 &nbsp;
     return NextResponse.json(log)
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error("Error updating exercise log:", error)</span>
-<span class="cstat-no" title="statement not covered" >    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })</span>
+    console.error("Error updating exercise log:", error)
+    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
   }
 }
 &nbsp;
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
     const id = Number.parseInt(params.id)
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (isNaN(id)) {
-<span class="cstat-no" title="statement not covered" >      return NextResponse.json({ error: "ID inválido" }, { status: 400 })</span>
+    if (isNaN(id)) {
+      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 &nbsp;
     const success = ExerciseLogModel.delete(id)
@@ -209,11 +209,11 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
 &nbsp;
     return NextResponse.json({ message: "Log excluído com sucesso" })
   } catch (error) {
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (error.message.includes("sessão finalizada")) {
+    if (error.message.includes("sessão finalizada")) {
       return NextResponse.json({ error: error.message }, { status: 400 })
     }
-<span class="cstat-no" title="statement not covered" >    console.error("Error deleting exercise log:", error)</span>
-<span class="cstat-no" title="statement not covered" >    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })</span>
+    console.error("Error deleting exercise log:", error)
+    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -223,7 +223,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-07T13:41:40.555Z
+                at 2025-11-07T17:54:45.761Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

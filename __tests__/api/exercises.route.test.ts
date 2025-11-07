@@ -71,4 +71,47 @@ describe("API /api/exercises route", () => {
     const res = await POST(fakeReq)
     expect(res.status).toBe(400)
   })
+  it("GET retorna 500 em caso de erro interno do servidor", async () => {
+    // Força o findAll a lançar um erro, acionando o bloco 'catch'
+    ;(ExerciseModel.findAll as jest.Mock).mockImplementation(() => {
+        throw new Error("DB Error")
+    })
+    const res = await GET({} as any)
+    expect(res.status).toBe(500)
+    const body = await res.json()
+    expect(body).toMatchObject({ error: "Erro interno do servidor" })
+})
+it("POST retorna 409 quando o nome do exercício já existe", async () => {
+    // 1. Simula que já existe um exercício com o mesmo nome
+    // A implementação da rota compara .toLowerCase(), então o mock deve refletir isso.
+    ;(ExerciseModel.findAll as jest.Mock).mockReturnValue([
+        { id: 1, name: "Supino Reto", muscle_group: "Peito" },
+    ])
+    ;(ExerciseModel.validateExercise as jest.Mock).mockReturnValue([]) // Válido
+
+    const fakeReq = { json: async () => ({ name: "supino reto", muscle_group: "Peito" }) } as any
+    const res = await POST(fakeReq)
+    expect(res.status).toBe(409)
+    const body = await res.json()
+    expect(body).toMatchObject({ error: "Já existe um exercício com este nome" })
+})
+
+it("POST retorna 500 em caso de erro interno (ex: falha ao salvar no DB ou parse do JSON)", async () => {
+    // Cenário 1: Erro no parse do JSON
+    const fakeReqErrorJson = { json: async () => { throw new Error("JSON Parse Error") } } as any
+    let res = await POST(fakeReqErrorJson)
+    expect(res.status).toBe(500)
+
+    // Cenário 2: Erro ao criar/salvar no DB (create)
+    jest.resetAllMocks() // Limpa mocks entre os cenários
+    ;(ExerciseModel.validateExercise as jest.Mock).mockReturnValue([])
+    ;(ExerciseModel.findAll as jest.Mock).mockReturnValue([])
+    ;(ExerciseModel.create as jest.Mock).mockImplementation(() => {
+        throw new Error("DB Create Error")
+    })
+
+    const fakeReqCreateError = { json: async () => ({ name: "Teste", muscle_group: "Costa" }) } as any
+    res = await POST(fakeReqCreateError)
+    expect(res.status).toBe(500)
+})
 })
