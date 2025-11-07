@@ -1,30 +1,59 @@
-import { GET, POST } from "../../app/api/exercises/route"
+// __tests__/api/exercises.test.ts
 import { jest } from "@jest/globals"
 
-jest.mock("../../lib/database", () => ({
-  __esModule: true,
-  default: {
-    prepare: jest.fn(() => ({
-      all: jest.fn(() => []),
-      get: jest.fn(),
-      run: jest.fn(() => ({ lastInsertRowid: 1 })),
-    })),
-  },
-}))
+let GET: any
+let POST: any
+let ExerciseModel: any
+let dbMock: any
 
-jest.mock("../../lib/models/Exercise", () => ({
-  __esModule: true,
-  ExerciseModel: {
-    findAll: jest.fn(() => []),
-    create: jest.fn((data) => ({
-      id: 1,
-      ...data,
-      created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString(),
-    })),
-    validateExercise: jest.fn(() => []),
-  },
-}))
+beforeAll(async () => {
+  // mock do DB - deve ser feito antes de importar a rota
+  jest.doMock("../../lib/database", () => {
+    return {
+      __esModule: true,
+      default: {
+        prepare: jest.fn(() => ({
+          all: jest.fn(() => []),
+          get: jest.fn(),
+          run: jest.fn(() => ({ lastInsertRowid: 1 })),
+        })),
+        exec: jest.fn(),
+      },
+    }
+  })
+
+  // mock do model Exercise
+  jest.doMock("../../lib/models/Exercise", () => {
+    return {
+      __esModule: true,
+      ExerciseModel: {
+        findAll: jest.fn(() => []),
+        create: jest.fn((data: any) => ({
+          id: 1,
+          ...data,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        })),
+        validateExercise: jest.fn(() => []),
+      },
+    }
+  })
+
+  // agora importamos a rota (ela receberá os mocks acima)
+  const routeModule = await import("../../app/api/exercises/route")
+  GET = routeModule.GET
+  POST = routeModule.POST
+
+  // para inspeção nas asserções dos testes
+  const dbModule = await import("../../lib/database")
+  dbMock = dbModule.default
+  const exerciseModule = await import("../../lib/models/Exercise")
+  ExerciseModel = exerciseModule.ExerciseModel
+})
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 describe("/api/exercises", () => {
   test("GET should return exercises list", async () => {
@@ -38,7 +67,7 @@ describe("/api/exercises", () => {
   })
 
   test("POST should create new exercise", async () => {
-    const { ExerciseModel } = require("../../lib/models/Exercise")
+    // garante que a validação não retorne erros
     ExerciseModel.validateExercise.mockReturnValue([])
 
     const exerciseData = {
@@ -54,11 +83,11 @@ describe("/api/exercises", () => {
     } as any
 
     const response = await POST(request)
+    // quando a rota usa o model mockado, deve retornar 201
     expect(response.status).toBe(201)
   })
 
   test("POST should validate required fields", async () => {
-    const { ExerciseModel } = require("../../lib/models/Exercise")
     ExerciseModel.validateExercise.mockReturnValue(["Nome do exercício é obrigatório"])
 
     const invalidData = {

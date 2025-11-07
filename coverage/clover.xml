@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1762474772260" clover="3.2.0">
-  <project timestamp="1762474772260" name="All files">
-    <metrics statements="481" coveredstatements="258" conditionals="208" coveredconditionals="90" methods="61" coveredmethods="37" elements="750" coveredelements="385" complexity="0" loc="481" ncloc="481" packages="12" files="15" classes="15"/>
+<coverage generated="1762474972375" clover="3.2.0">
+  <project timestamp="1762474972375" name="All files">
+    <metrics statements="481" coveredstatements="258" conditionals="208" coveredconditionals="86" methods="61" coveredmethods="37" elements="750" coveredelements="381" complexity="0" loc="481" ncloc="481" packages="12" files="15" classes="15"/>
     <package name="app.api.exercises">
       <metrics statements="22" coveredstatements="17" conditionals="4" coveredconditionals="3" methods="3" coveredmethods="2"/>
       <file name="route.ts" path="C:\Users\henrique.correa\Documents\INATEL\gumtrackfake\GymTrack\app\api\exercises\route.ts">
@@ -14,7 +14,7 @@
         <line num="7" count="2" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
         <line num="10" count="0" type="stmt"/>
-        <line num="14" count="3" type="stmt"/>
+        <line num="14" count="2" type="stmt"/>
         <line num="15" count="4" type="stmt"/>
         <line num="16" count="4" type="stmt"/>
         <line num="19" count="4" type="stmt"/>
@@ -346,20 +346,20 @@
       <metrics statements="18" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
       <file name="database.ts" path="C:\Users\henrique.correa\Documents\INATEL\gumtrackfake\GymTrack\lib\database.ts">
         <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="2" type="stmt"/>
-        <line num="2" count="2" type="stmt"/>
-        <line num="5" count="2" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="9" count="2" type="stmt"/>
-        <line num="12" count="2" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="27" count="2" type="stmt"/>
-        <line num="38" count="2" type="stmt"/>
-        <line num="54" count="2" type="stmt"/>
-        <line num="67" count="2" type="stmt"/>
-        <line num="83" count="2" type="stmt"/>
-        <line num="87" count="2" type="stmt"/>
-        <line num="89" count="26" type="stmt"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="89" count="22" type="stmt"/>
       </file>
       <file name="utils.ts" path="C:\Users\henrique.correa\Documents\INATEL\gumtrackfake\GymTrack\lib\utils.ts">
         <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
@@ -370,18 +370,18 @@
       </file>
     </package>
     <package name="lib.models">
-      <metrics statements="183" coveredstatements="51" conditionals="116" coveredconditionals="32" methods="33" coveredmethods="13"/>
+      <metrics statements="183" coveredstatements="51" conditionals="116" coveredconditionals="28" methods="33" coveredmethods="13"/>
       <file name="Exercise.ts" path="C:\Users\henrique.correa\Documents\INATEL\gumtrackfake\GymTrack\lib\models\Exercise.ts">
-        <metrics statements="45" coveredstatements="19" conditionals="24" coveredconditionals="14" methods="8" coveredmethods="5"/>
-        <line num="1" count="5" type="stmt"/>
-        <line num="13" count="9" type="stmt"/>
-        <line num="15" count="4" type="stmt"/>
-        <line num="20" count="4" type="stmt"/>
-        <line num="27" count="4" type="stmt"/>
-        <line num="31" count="3" type="stmt"/>
-        <line num="32" count="3" type="stmt"/>
-        <line num="36" count="5" type="stmt"/>
-        <line num="37" count="5" type="stmt"/>
+        <metrics statements="45" coveredstatements="19" conditionals="24" coveredconditionals="10" methods="8" coveredmethods="5"/>
+        <line num="1" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="27" count="3" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
         <line num="41" count="0" type="stmt"/>
         <line num="42" count="0" type="stmt"/>
         <line num="46" count="0" type="stmt"/>
@@ -406,14 +406,14 @@
         <line num="80" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
         <line num="82" count="1" type="stmt"/>
-        <line num="86" count="3" type="stmt"/>
-        <line num="88" count="3" type="cond" truecount="4" falsecount="0"/>
-        <line num="89" count="2" type="stmt"/>
-        <line num="92" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="88" count="1" type="cond" truecount="2" falsecount="2"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="92" count="1" type="cond" truecount="2" falsecount="2"/>
         <line num="93" count="1" type="stmt"/>
-        <line num="96" count="3" type="cond" truecount="2" falsecount="2"/>
+        <line num="96" count="1" type="cond" truecount="2" falsecount="2"/>
         <line num="97" count="0" type="stmt"/>
-        <line num="100" count="3" type="stmt"/>
+        <line num="100" count="1" type="stmt"/>
         <line num="104" count="0" type="stmt"/>
         <line num="105" count="0" type="stmt"/>
         <line num="106" count="0" type="stmt"/>
