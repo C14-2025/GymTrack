@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Install Docker CLI') {
+            steps {
+                sh 'apt-get update && apt-get install -y docker.io'
+            }
+        }
+
+    stages {
         stage('Build Docker Image'){
             steps{
                 script{
