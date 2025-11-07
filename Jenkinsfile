@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Install Docker CLI') {
-            steps {
-                // Instala o cliente Docker CLI dentro do container Jenkins
-                sh 'sudo apt-get update && sudo apt-get install -y docker.io'
-            }
-        }
-
         stage('Build Docker Image'){
             steps{
                 script{
