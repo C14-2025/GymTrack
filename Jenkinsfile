@@ -4,12 +4,11 @@ pipeline {
     stages {
         stage('Install Docker CLI') {
             steps {
+                // Instala o cliente Docker CLI dentro do container Jenkins
                 sh 'apt-get update && apt-get install -y docker.io'
             }
         }
-    }
 
-    stages {
         stage('Build Docker Image'){
             steps{
                 script{
@@ -17,7 +16,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Push Docker Image'){
             steps{
                 script{
