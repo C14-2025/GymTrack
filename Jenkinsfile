@@ -5,7 +5,7 @@ pipeline {
         stage('Build Docker Image'){
             steps{
                 script{
-                    dockerapp = docker.build("C14-2025/GymTrack:${env.BUILD_ID}", '.')
+                    dockerapp = docker.build("c14-2025/gymtrack:${env.BUILD_ID}", '.')
                 }
             }
         }
