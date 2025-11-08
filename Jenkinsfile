@@ -1,25 +1,27 @@
 pipeline {
     agent any
+    
     tools {
-        nodejs 'Node-20'
+        nodejs 'Node-20' 
     }
+    
     stages {
         
-        stage('Teste de conexão'){
-            steps{
-                    sh "curl http://gymtrack:3000"
+        stage('Instalar Dependências') {
+            steps {
+                sh 'npm install'
             }
         }
         
-        stage('Instalando dependencias'){
-            steps{
-                    sh 'npm Install'
+        stage('Testes de Unidade') {
+            steps {
+                sh 'npm test'
             }
         }
         
-        stage('Rodando os tests'){
-            steps{
-                    sh 'npm test'
+        stage('Teste de Conexão e Integração') {
+            steps {
+                sh "curl -f http://gymtrack:3000"
             }
         }
     }
