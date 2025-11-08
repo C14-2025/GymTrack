@@ -1,0 +1,23 @@
+#Docker compose do GYMTRACK
+  
+  version: '3.8'
+  services:
+    jenkins_gymtrack:
+      build: 
+        dockerfile: Dockerfile.jenkins
+        context: .
+      ports:
+       - 8080:8080
+      volumes: 
+        - jenkins_data:/var/jenkins_home
+
+    gymtrack:
+      build: 
+        dockerfile: Dockerfile
+        context: .      
+      container_name: GymTrack
+      ports:
+        - 3000:3000
+
+  volumes:
+  jenkins_data:
