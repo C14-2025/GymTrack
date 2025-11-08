@@ -2,11 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Build Docker Image'){
+        stage('Teste de conexão'){
             steps{
-                script{
-                    dockerapp = docker.build("c14-2025/gymtrack:${env.BUILD_ID}", '.')
-                }
+                    sh "curl http://gymtrack:3000"
             }
         }
     }
