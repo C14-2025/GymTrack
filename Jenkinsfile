@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        nodejs 'Node-20'
+    }
     stages {
         
         stage('Teste de conexão'){
