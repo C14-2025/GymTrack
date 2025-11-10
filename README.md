@@ -16,7 +16,7 @@ GymTrack é um sistema completo para gerenciamento de treinos de academia, desen
 - **Backend**: Next.js API Routes, SQLite, Better-SQLite3
 - **Gráficos**: Recharts
 - **Testes**: Jest, Testing Library
-- **CI/CD**: GitHub Actions
+- **CI/CD**: Jenkins
 
 ## 📦 Instalação
 
@@ -42,13 +42,10 @@ npm run dev
 
 ```
 # Executar todos os testes
-npm test
-
-# Executar testes em modo watch
-npm run test:watch
+npx jest
 
 # Executar testes com coverage
-npm run test:coverage
+npx jest --coverage
 ```
 
 ## 📊 Estrutura do Projeto
@@ -74,7 +71,7 @@ gymtrack/
 - `npm run dev` - Inicia o servidor de desenvolvimento
 - `npm run build` - Gera build de produção
 - `npm run start` - Inicia servidor de produção
-- `npm run test` - Executa testes
+- `npx jest` - Executa testes
 
 
 ## 🤝 Contribuição
