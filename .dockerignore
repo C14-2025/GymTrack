@@ -40,3 +40,5 @@ coverage
 .gitignore
 
 pnpm-lock.yaml
+
+gymtrack.db

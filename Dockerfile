@@ -35,7 +35,7 @@ RUN chown nextjs:nodejs .next
 COPY --from=deps /app/next.config.mjs ./.next.config.mjs
 COPY --from=deps --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=deps --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=deps --chown=nextjs:nodejs /app/gymtrack.db ./gymtrack.db
+RUN mkdir -p /app && chown nextjs:nodejs /app
 
 USER nextjs 
 

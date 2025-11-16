@@ -18,6 +18,8 @@
       container_name: GymTrack
       ports:
         - 3000:3000
+      volumes:
+        - ./gymtrack.db:/app/gymtrack.db
 
   volumes:
-  jenkins_data:
+    jenkins_data: {}

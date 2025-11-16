@@ -15,7 +15,18 @@ pipeline {
         
         stage('Testes de Unidade') {
             steps {
-                sh 'npm test'
+                sh '''
+                echo "🧪 Rodando testes..."
+                npm ci
+                npx jest --coverage --reporters=default --reporters=jest-junit
+                '''
+            }
+            post {
+                always {
+                    echo "📁 Salvando relatórios..."
+                    junit 'junit.xml'               // resultados dos testes
+                    archiveArtifacts 'coverage/**'  // cobertura de código
+                }
             }
         }
         
