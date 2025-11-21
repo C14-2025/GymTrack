@@ -18,14 +18,14 @@ pipeline {
                 sh '''
                 echo "🧪 Rodando testes..."
                 npm ci
-                npx jest --coverage --reporters=default --reporters=jest-junit
+                npx jest --coverage 
                 '''
             }
             post {
                 always {
                     echo "📁 Salvando relatórios..."
-                    junit 'junit.xml'               // resultados dos testes
-                    archiveArtifacts 'coverage/**'  // cobertura de código
+                    junit 'junit.xml'               
+                    archiveArtifacts 'coverage/**'  
                 }
             }
         }
