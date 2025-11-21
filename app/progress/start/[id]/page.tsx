@@ -3,14 +3,25 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Play, Check, Clock, Weight, Hash } from "lucide-react"
+
+import {
+  ArrowLeft,
+  Check,
+  Clock,
+  Hash,
+  Play,
+  Weight,
+} from "lucide-react"
+
 import type { WorkoutTemplateWithExercises } from "@/lib/models/WorkoutTemplate"
+
 
 interface ExerciseProgress {
   exercise_id: number

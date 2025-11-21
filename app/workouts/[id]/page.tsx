@@ -2,11 +2,23 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Edit, Calendar, Dumbbell, Clock, Hash, Weight } from "lucide-react"
+
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  Dumbbell,
+  Edit,
+  Hash,
+  Weight,
+} from "lucide-react"
+
 import type { WorkoutTemplateWithExercises } from "@/lib/models/WorkoutTemplate"
+
 
 export default function WorkoutDetailPage({ params }: { params: { id: string } }) {
   const [workout, setWorkout] = useState<WorkoutTemplateWithExercises | null>(null)

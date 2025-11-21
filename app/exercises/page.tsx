@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Search, Edit, Trash2, ExternalLink, Dumbbell, BarChart3 } from "lucide-react"
+
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  ExternalLink,
+  Dumbbell,
+  BarChart3,
+} from "lucide-react"
+
 import type { Exercise } from "@/lib/models/Exercise"
 
 export default function ExercisesPage() {

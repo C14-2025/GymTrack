@@ -2,11 +2,32 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, TrendingUp, Calendar, Weight, BarChart3, Target } from "lucide-react"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts"
+
+import {
+  ArrowLeft,
+  TrendingUp,
+  Calendar,
+  Weight,
+  BarChart3,
+  Target,
+} from "lucide-react"
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from "recharts"
+
 import type { Exercise } from "@/lib/models/Exercise"
 
 interface EvolutionData {

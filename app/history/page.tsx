@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+
 import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { BarChart3, Calendar, Clock, Eye, Search, TrendingUp, LineChart } from "lucide-react"
+
+import {
+  BarChart3,
+  Calendar,
+  Clock,
+  Eye,
+  LineChart,
+  Search,
+  TrendingUp,
+} from "lucide-react"
+
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -16,6 +27,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+
 import type { WorkoutSession } from "@/lib/models/WorkoutSession"
 
 export default function HistoryPage() {
