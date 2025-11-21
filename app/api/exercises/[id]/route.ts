@@ -29,7 +29,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const body = await request.json()
 
-    // Validate input
+    
     const errors = ExerciseModel.validateExercise(body)
     if (errors.length > 0) {
       return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
 
     const body = await request.json()
 
-    // Validate input
+    
     const errors = WorkoutTemplateModel.validateTemplateExercise(body)
     if (errors.length > 0) {
       return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })

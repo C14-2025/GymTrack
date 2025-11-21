@@ -10,7 +10,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     const logs = ExerciseLogModel.findByExerciseId(id)
 
-    // Group logs by date and calculate metrics
+    
     const evolutionData: Record<
       string,
       {
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       data.sets += 1
     })
 
-    // Calculate average weight and sort by date
+    
     const evolution = Object.values(evolutionData)
       .map((data) => ({
         ...data,
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       }))
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-    // Calculate progress metrics
+    
     const firstSession = evolution[0]
     const lastSession = evolution[evolution.length - 1]
 
