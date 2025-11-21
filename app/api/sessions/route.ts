@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Validate input
+    
     const errors = WorkoutSessionModel.validateSession(body)
     if (errors.length > 0) {
       return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
