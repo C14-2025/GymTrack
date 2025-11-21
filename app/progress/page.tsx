@@ -2,10 +2,19 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, TrendingUp, Calendar, Play, Eye } from "lucide-react"
+
+import {
+  Calendar,
+  Eye,
+  Play,
+  Plus,
+  TrendingUp,
+} from "lucide-react"
+
 import type { WorkoutTemplate } from "@/lib/models/WorkoutTemplate"
 import type { WorkoutSession } from "@/lib/models/WorkoutSession"
 
@@ -26,7 +35,7 @@ export default function ProgressPage() {
       const sessionsData = await sessionsResponse.json()
 
       setWorkouts(workoutsData)
-      setRecentSessions(sessionsData.slice(0, 5)) // Show last 5 sessions
+      setRecentSessions(sessionsData.slice(0, 5)) 
     } catch (error) {
       console.error("Error fetching data:", error)
     } finally {

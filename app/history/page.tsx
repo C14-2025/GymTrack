@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+
 import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { BarChart3, Calendar, Clock, Eye, Search, TrendingUp, LineChart } from "lucide-react"
+
+import {
+  BarChart3,
+  Calendar,
+  Clock,
+  Eye,
+  LineChart,
+  Search,
+  TrendingUp,
+} from "lucide-react"
+
 import {
   LineChart as RechartsLineChart,
   Line,
@@ -16,6 +27,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts"
+
 import type { WorkoutSession } from "@/lib/models/WorkoutSession"
 
 export default function HistoryPage() {
@@ -98,7 +110,7 @@ export default function HistoryPage() {
   }
 
   const getChartData = () => {
-    // Group sessions by week and count
+    
     const weeklyData: Record<string, number> = {}
 
     filteredSessions.forEach((session) => {
@@ -118,7 +130,7 @@ export default function HistoryPage() {
           new Date(a.date.split("/").reverse().join("-")).getTime() -
           new Date(b.date.split("/").reverse().join("-")).getTime(),
       )
-      .slice(-8) // Last 8 weeks
+      .slice(-8) 
   }
 
   const stats = getStats()

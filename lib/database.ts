@@ -1,16 +1,16 @@
 import Database from "better-sqlite3"
 import path from "path"
 
-// Initialize SQLite database
+
 const dbPath = path.join(process.cwd(), "gymtrack.db")
 const db = new Database(dbPath)
 
-// Enable foreign keys
+
 db.pragma("foreign_keys = ON")
 
-// Create tables
+
 const createTables = () => {
-  // Exercises table
+  
   db.exec(`
     CREATE TABLE IF NOT EXISTS exercises (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,7 +23,7 @@ const createTables = () => {
     )
   `)
 
-  // Workout templates table
+  
   db.exec(`
     CREATE TABLE IF NOT EXISTS workout_templates (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -34,7 +34,7 @@ const createTables = () => {
     )
   `)
 
-  // Workout template exercises (junction table)
+  
   db.exec(`
     CREATE TABLE IF NOT EXISTS workout_template_exercises (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -50,7 +50,7 @@ const createTables = () => {
     )
   `)
 
-  // Workout sessions table
+  
   db.exec(`
     CREATE TABLE IF NOT EXISTS workout_sessions (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -63,7 +63,7 @@ const createTables = () => {
     )
   `)
 
-  // Exercise logs table (progress tracking)
+  
   db.exec(`
     CREATE TABLE IF NOT EXISTS exercise_logs (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,7 +83,7 @@ const createTables = () => {
   console.log("Database tables created successfully")
 }
 
-// Initialize database
+
 createTables()
 
 export default db

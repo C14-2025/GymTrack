@@ -2,10 +2,19 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Calendar, Clock, CheckCircle, XCircle } from "lucide-react"
+
+import {
+  ArrowLeft,
+  Calendar,
+  CheckCircle,
+  Clock,
+  XCircle,
+} from "lucide-react"
+
 import type { WorkoutSessionWithLogs } from "@/lib/models/WorkoutSession"
 
 export default function SessionDetailPage({ params }: { params: { id: string } }) {
