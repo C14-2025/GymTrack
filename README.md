@@ -36,6 +36,28 @@ npm install
 npm run dev
 ```
 
+## 🐳 Executar com Docker
+
+O projeto possui um arquivo `docker-compose.yml` na raiz, permitindo rodar tudo facilmente via Docker.
+
+### **Subir o projeto**
+```bash
+docker-compose up --build
+```
+
+### **Rodar em modo detached**
+```bash
+docker-compose up -d
+```
+
+### **Parar os containers**
+```bash
+docker-compose down
+```
+
+Após subir, acesse:  
+👉 **http://localhost:3000**
+
 4. Acesse http://localhost:3000
 
 ## 🧪 Testes
