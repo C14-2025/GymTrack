@@ -1,16 +1,20 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { ExerciseLogModel } from "@/lib/models/WorkoutSession"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 
-    const logs = ExerciseLogModel.findByExerciseId(id)
+    const logs = ExerciseLogModel.findByExerciseId(parsedId)
 
-    
     const evolutionData: Record<
       string,
       {
@@ -43,7 +47,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       data.sets += 1
     })
 
-    
     const evolution = Object.values(evolutionData)
       .map((data) => ({
         ...data,
@@ -51,7 +54,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
       }))
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
 
-    
     const firstSession = evolution[0]
     const lastSession = evolution[evolution.length - 1]
 
