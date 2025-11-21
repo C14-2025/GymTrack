@@ -22,8 +22,8 @@ GymTrack é um sistema completo para gerenciamento de treinos de academia, desen
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/gymtrack.git
-cd gymtrack
+git clone https://github.com/C14-2025/GymTrack.git
+cd GymTrack
 ```
 
 2. Instale as dependências:
