@@ -1,14 +1,20 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { ExerciseModel } from "@/lib/models/Exercise"
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+// GET
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 
-    const exercise = ExerciseModel.findById(id)
+    const exercise = ExerciseModel.findById(parsedId)
     if (!exercise) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }
@@ -20,22 +26,27 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+// PUT
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 
     const body = await request.json()
 
-    
     const errors = ExerciseModel.validateExercise(body)
     if (errors.length > 0) {
       return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
     }
 
-    const exercise = ExerciseModel.update(id, body)
+    const exercise = ExerciseModel.update(parsedId, body)
     if (!exercise) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }
@@ -47,14 +58,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+// DELETE
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 
-    const deleted = ExerciseModel.delete(id)
+    const deleted = ExerciseModel.delete(parsedId)
     if (!deleted) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }

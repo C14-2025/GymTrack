@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">78.94% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>15/19</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">78.94% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>15/19</span>
             </div>
         
             
@@ -93,8 +93,25 @@
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
-<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -102,7 +119,6 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -110,7 +126,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -119,20 +134,28 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type NextRequest, NextResponse } from "next/server"
 import { WorkoutTemplateModel } from "@/lib/models/WorkoutTemplate"
 &nbsp;
+// Helpers
+function badRequest(message: string, details?: any) {
+  return NextResponse.json({ error: message, ...(details &amp;&amp; { details }) }, { status: 400 })
+}
+&nbsp;
+function <span class="fstat-no" title="function not covered" >serverError(c</span>ontext: string, error: unknown) {
+<span class="cstat-no" title="statement not covered" >  console.error(context, error)</span>
+<span class="cstat-no" title="statement not covered" >  return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })</span>
+}
+&nbsp;
 export async function GET() {
   try {
     const workouts = WorkoutTemplateModel.findAll()
     return NextResponse.json(workouts)
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error("Error fetching workout templates:", error)</span>
-<span class="cstat-no" title="statement not covered" >    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })</span>
+<span class="cstat-no" title="statement not covered" >    return serverError("Error fetching workout templates:", error)</span>
   }
 }
 &nbsp;
@@ -140,17 +163,15 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 &nbsp;
-    // Validate input
     const errors = WorkoutTemplateModel.validateTemplate(body)
     if (errors.length &gt; 0) {
-      return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
+      return badRequest("Dados inválidos", errors)
     }
 &nbsp;
     const workout = WorkoutTemplateModel.create(body)
     return NextResponse.json(workout, { status: 201 })
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error("Error creating workout template:", error)</span>
-<span class="cstat-no" title="statement not covered" >    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })</span>
+<span class="cstat-no" title="statement not covered" >    return serverError("Error creating workout template:", error)</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -160,7 +181,7 @@ export async function POST(request: NextRequest) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-08T16:42:44.627Z
+                at 2025-11-21T18:59:50.710Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

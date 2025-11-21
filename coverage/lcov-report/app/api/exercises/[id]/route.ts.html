@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>42/42</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>39/39</span>
+                <span class='fraction'>42/42</span>
             </div>
         
             
@@ -130,12 +130,35 @@
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
 <a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">13x</span>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -152,15 +175,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -179,9 +207,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,14 +234,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { type NextRequest, NextResponse } from "next/server"
 import { ExerciseModel } from "@/lib/models/Exercise"
 &nbsp;
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+// GET
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise&lt;{ id: string }&gt; }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+&nbsp;
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 &nbsp;
-    const exercise = ExerciseModel.findById(id)
+    const exercise = ExerciseModel.findById(parsedId)
     if (!exercise) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }
@@ -219,22 +259,27 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 &nbsp;
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+// PUT
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise&lt;{ id: string }&gt; }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+&nbsp;
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 &nbsp;
     const body = await request.json()
 &nbsp;
-    // Validate input
     const errors = ExerciseModel.validateExercise(body)
     if (errors.length &gt; 0) {
       return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
     }
 &nbsp;
-    const exercise = ExerciseModel.update(id, body)
+    const exercise = ExerciseModel.update(parsedId, body)
     if (!exercise) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }
@@ -246,14 +291,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 &nbsp;
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+// DELETE
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise&lt;{ id: string }&gt; }
+) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
+    const { id } = await context.params
+    const parsedId = Number.parseInt(id)
+&nbsp;
+    if (isNaN(parsedId)) {
       return NextResponse.json({ error: "ID inválido" }, { status: 400 })
     }
 &nbsp;
-    const deleted = ExerciseModel.delete(id)
+    const deleted = ExerciseModel.delete(parsedId)
     if (!deleted) {
       return NextResponse.json({ error: "Exercício não encontrado" }, { status: 404 })
     }
@@ -271,7 +322,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-08T16:42:44.627Z
+                at 2025-11-21T18:59:50.710Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

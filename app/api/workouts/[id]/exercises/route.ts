@@ -1,53 +1,62 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { WorkoutTemplateModel } from "@/lib/models/WorkoutTemplate"
 
+// Helpers seguros
+function parseWorkoutId(id: string) {
+  const num = Number.parseInt(id)
+  return isNaN(num) ? null : num
+}
+
+function badRequest(message: string, details?: any) {
+  return NextResponse.json({ error: message, ...(details && { details }) }, { status: 400 })
+}
+
+function serverError(message: string, error: unknown) {
+  console.error(message, error)
+  return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+}
+
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const workoutId = Number.parseInt(params.id)
-    if (isNaN(workoutId)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
-    }
+    const workoutId = parseWorkoutId(params.id)
+    if (!workoutId) return badRequest("ID inválido")
 
     const body = await request.json()
 
-    
     const errors = WorkoutTemplateModel.validateTemplateExercise(body)
     if (errors.length > 0) {
-      return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
+      return badRequest("Dados inválidos", errors)
     }
 
     const success = WorkoutTemplateModel.addExercise(workoutId, body)
     if (!success) {
-      return NextResponse.json({ error: "Erro ao adicionar exercício" }, { status: 400 })
+      return badRequest("Erro ao adicionar exercício")
     }
 
     return NextResponse.json({ message: "Exercício adicionado com sucesso" }, { status: 201 })
   } catch (error) {
-    console.error("Error adding exercise to workout:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    return serverError("Error adding exercise to workout:", error)
   }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const workoutId = Number.parseInt(params.id)
-    if (isNaN(workoutId)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
-    }
+    const workoutId = parseWorkoutId(params.id)
+    if (!workoutId) return badRequest("ID inválido")
 
     const body = await request.json()
-    if (!body.exercise_id) {
-      return NextResponse.json({ error: "exercise_id é obrigatório" }, { status: 400 })
-    }
+    const exerciseId = body.exercise_id
 
-    const success = WorkoutTemplateModel.removeExercise(workoutId, body.exercise_id)
+    if (!exerciseId) return badRequest("exercise_id é obrigatório")
+
+    const success = WorkoutTemplateModel.removeExercise(workoutId, exerciseId)
+
     if (!success) {
       return NextResponse.json({ error: "Exercício não encontrado no template" }, { status: 404 })
     }
 
     return NextResponse.json({ message: "Exercício removido com sucesso" })
   } catch (error) {
-    console.error("Error removing exercise from workout:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    return serverError("Error removing exercise from workout:", error)
   }
 }

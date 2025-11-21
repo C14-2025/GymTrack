@@ -127,10 +127,16 @@ export class WorkoutTemplateModel {
   }
 
   static delete(id: number): boolean {
-    const stmt = db.prepare("DELETE FROM workout_templates WHERE id = ?")
-    const result = stmt.run(id)
-    return result.changes > 0
-  }
+  
+  db.prepare("DELETE FROM workout_template_exercises WHERE workout_template_id = ?")
+    .run(id)
+
+  
+  const stmt = db.prepare("DELETE FROM workout_templates WHERE id = ?")
+  const result = stmt.run(id)
+
+  return result.changes > 0
+}
 
   static validateTemplate(template: Partial<WorkoutTemplate>): string[] {
     const errors: string[] = []

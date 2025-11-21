@@ -1,67 +1,70 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { WorkoutTemplateModel } from "@/lib/models/WorkoutTemplate"
 
+// Helpers reutilizáveis
+function parseWorkoutId(id: string) {
+  const num = Number.parseInt(id)
+  return isNaN(num) ? null : num
+}
+
+function badRequest(message: string, details?: any) {
+  return NextResponse.json({ error: message, ...(details && { details }) }, { status: 400 })
+}
+
+function notFound(message: string) {
+  return NextResponse.json({ error: message }, { status: 404 })
+}
+
+function serverError(context: string, error: unknown) {
+  console.error(context, error)
+  return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+}
+
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
-    }
+    const workoutId = parseWorkoutId(params.id)
+    if (!workoutId) return badRequest("ID inválido")
 
-    const workout = WorkoutTemplateModel.findByIdWithExercises(id)
-    if (!workout) {
-      return NextResponse.json({ error: "Ficha de treino não encontrada" }, { status: 404 })
-    }
+    const workout = WorkoutTemplateModel.findByIdWithExercises(workoutId)
+    if (!workout) return notFound("Ficha de treino não encontrada")
 
     return NextResponse.json(workout)
   } catch (error) {
-    console.error("Error fetching workout template:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    return serverError("Error fetching workout template:", error)
   }
 }
 
 export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
-    }
+    const workoutId = parseWorkoutId(params.id)
+    if (!workoutId) return badRequest("ID inválido")
 
     const body = await request.json()
 
-    
     const errors = WorkoutTemplateModel.validateTemplate(body)
     if (errors.length > 0) {
-      return NextResponse.json({ error: "Dados inválidos", details: errors }, { status: 400 })
+      return badRequest("Dados inválidos", errors)
     }
 
-    const workout = WorkoutTemplateModel.update(id, body)
-    if (!workout) {
-      return NextResponse.json({ error: "Ficha de treino não encontrada" }, { status: 404 })
-    }
+    const workout = WorkoutTemplateModel.update(workoutId, body)
+    if (!workout) return notFound("Ficha de treino não encontrada")
 
     return NextResponse.json(workout)
   } catch (error) {
-    console.error("Error updating workout template:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    return serverError("Error updating workout template:", error)
   }
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const id = Number.parseInt(params.id)
-    if (isNaN(id)) {
-      return NextResponse.json({ error: "ID inválido" }, { status: 400 })
-    }
+    const workoutId = parseWorkoutId(params.id)
+    if (!workoutId) return badRequest("ID inválido")
 
-    const deleted = WorkoutTemplateModel.delete(id)
-    if (!deleted) {
-      return NextResponse.json({ error: "Ficha de treino não encontrada" }, { status: 404 })
-    }
+    const deleted = WorkoutTemplateModel.delete(workoutId)
+    if (!deleted) return notFound("Ficha de treino não encontrada")
 
     return NextResponse.json({ message: "Ficha de treino excluída com sucesso" })
   } catch (error) {
-    console.error("Error deleting workout template:", error)
-    return NextResponse.json({ error: "Erro interno do servidor" }, { status: 500 })
+    return serverError("Error deleting workout template:", error)
   }
 }
