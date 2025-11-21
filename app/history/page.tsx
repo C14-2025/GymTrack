@@ -98,7 +98,7 @@ export default function HistoryPage() {
   }
 
   const getChartData = () => {
-    // Group sessions by week and count
+    
     const weeklyData: Record<string, number> = {}
 
     filteredSessions.forEach((session) => {
@@ -118,7 +118,7 @@ export default function HistoryPage() {
           new Date(a.date.split("/").reverse().join("-")).getTime() -
           new Date(b.date.split("/").reverse().join("-")).getTime(),
       )
-      .slice(-8) // Last 8 weeks
+      .slice(-8) 
   }
 
   const stats = getStats()

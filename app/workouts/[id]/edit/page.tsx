@@ -140,7 +140,7 @@ export default function EditWorkoutPage({ params }: { params: { id: string } }) 
           rest_seconds: 60,
           order_index: 0,
         })
-        fetchWorkout() // Refresh workout data
+        fetchWorkout() 
       } else {
         const data = await response.json()
         alert(data.error || "Erro ao adicionar exercício")

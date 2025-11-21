@@ -120,10 +120,10 @@ export default function StartWorkoutPage({ params }: { params: { id: string } })
     setSaving(true)
 
     try {
-      // Calculate duration
+      
       const duration = Math.round((new Date().getTime() - startTime.getTime()) / 1000 / 60)
 
-      // Update session with duration and notes
+      
       await fetch(`/api/sessions/${sessionId}`, {
         method: "PUT",
         headers: {

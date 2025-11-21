@@ -26,7 +26,7 @@ export default function ProgressPage() {
       const sessionsData = await sessionsResponse.json()
 
       setWorkouts(workoutsData)
-      setRecentSessions(sessionsData.slice(0, 5)) // Show last 5 sessions
+      setRecentSessions(sessionsData.slice(0, 5)) 
     } catch (error) {
       console.error("Error fetching data:", error)
     } finally {
