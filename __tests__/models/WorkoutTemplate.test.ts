@@ -1,176 +1,210 @@
-import db from "../database"
+import { jest } from "@jest/globals"
 
-export interface WorkoutTemplate {
-  id?: number
-  name: string
-  description?: string
-  created_at?: string
-  updated_at?: string
+const mockDb: any = {
+  prepare: jest.fn(),
+  exec: jest.fn(),
+  pragma: jest.fn(),
 }
 
-export interface WorkoutTemplateExercise {
-  id?: number
-  workout_template_id: number
-  exercise_id: number
-  sets: number
-  reps: number
-  initial_weight: number
-  rest_seconds: number
-  order_index: number
-}
+jest.doMock("../../lib/database", () => ({ __esModule: true, default: mockDb }))
 
-export interface WorkoutTemplateWithExercises extends WorkoutTemplate {
-  exercises: (WorkoutTemplateExercise & {
-    exercise_name: string
-    muscle_group: string
-  })[]
-}
+const { WorkoutTemplateModel } = require("../../lib/models/WorkoutTemplate")
 
-export class WorkoutTemplateModel {
-  static create(template: Omit<WorkoutTemplate, "id" | "created_at" | "updated_at">): WorkoutTemplate {
-    const stmt = db.prepare(`
-      INSERT INTO workout_templates (name, description)
-      VALUES (?, ?)
-    `)
+describe("WorkoutTemplateModelTest", () => {
+  const mockTemplate = { id: 5, name: "W5", description: "desc", created_at: "now", updated_at: "now" }
+  const mockExercise = { exercise_id: 2, sets: 3, reps: 10, initial_weight: 0, rest_seconds: 60, order_index: 1 }
 
-    const result = stmt.run(template.name, template.description || null)
-    return this.findById(result.lastInsertRowid as number)!
-  }
+  beforeEach(() => {
+    jest.clearAllMocks()
+    jest.spyOn(WorkoutTemplateModel, "findById").mockRestore()
+  })
 
-  static findAll(): WorkoutTemplate[] {
-    const stmt = db.prepare("SELECT * FROM workout_templates ORDER BY name")
-    return stmt.all() as WorkoutTemplate[]
-  }
+  it("create: deve inserir e retornar o template criado", () => {
+    const insertStmt = { run: jest.fn().mockReturnValue({ lastInsertRowid: 5 }) }
+    const findStmt = { get: jest.fn().mockReturnValue(mockTemplate) }
 
-  static findById(id: number): WorkoutTemplate | null {
-    const stmt = db.prepare("SELECT * FROM workout_templates WHERE id = ?")
-    return stmt.get(id) as WorkoutTemplate | null
-  }
+    mockDb.prepare.mockReturnValueOnce(insertStmt).mockReturnValueOnce(findStmt)
 
-  static findByIdWithExercises(id: number): WorkoutTemplateWithExercises | null {
-    const template = this.findById(id)
-    if (!template) return null
+    const created = WorkoutTemplateModel.create({ name: "W5", description: "desc" })
 
-    const stmt = db.prepare(`
-      SELECT wte.*, e.name as exercise_name, e.muscle_group
-      FROM workout_template_exercises wte
-      JOIN exercises e ON wte.exercise_id = e.id
-      WHERE wte.workout_template_id = ?
-      ORDER BY wte.order_index
-    `)
+    expect(created).toEqual(mockTemplate)
+    expect(insertStmt.run).toHaveBeenCalledWith("W5", "desc")
+  })
 
-    const exercises = stmt.all(id) as (WorkoutTemplateExercise & {
-      exercise_name: string
-      muscle_group: string
-    })[]
+  it("create: deve lidar com description undefined (usa null)", () => {
+    const insertStmt = { run: jest.fn().mockReturnValue({ lastInsertRowid: 5 }) }
+    const findStmt = { get: jest.fn().mockReturnValue(mockTemplate) }
 
-    return { ...template, exercises }
-  }
+    mockDb.prepare.mockReturnValueOnce(insertStmt).mockReturnValueOnce(findStmt)
 
-  static addExercise(
-    templateId: number,
-    exercise: Omit<WorkoutTemplateExercise, "id" | "workout_template_id">,
-  ): boolean {
-    const stmt = db.prepare(`
-      INSERT INTO workout_template_exercises 
-      (workout_template_id, exercise_id, sets, reps, initial_weight, rest_seconds, order_index)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `)
+    WorkoutTemplateModel.create({ name: "W5" })
 
-    const result = stmt.run(
-      templateId,
-      exercise.exercise_id,
-      exercise.sets,
-      exercise.reps,
-      exercise.initial_weight,
-      exercise.rest_seconds,
-      exercise.order_index,
-    )
+    expect(insertStmt.run).toHaveBeenCalledWith("W5", null)
+  })
 
-    return result.changes > 0
-  }
+  it("delete: deve retornar true se deletar e false se não encontrar [BRANCH COVERAGE]", () => {
+    const deleteStmtExercisesSuccess = { run: jest.fn() }
+    const deleteStmtTemplateSuccess = { run: jest.fn().mockReturnValue({ changes: 1 }) }
 
-  static removeExercise(templateId: number, exerciseId: number): boolean {
-    const stmt = db.prepare(`
-      DELETE FROM workout_template_exercises 
-      WHERE workout_template_id = ? AND exercise_id = ?
-    `)
+    mockDb.prepare.mockReturnValueOnce(deleteStmtExercisesSuccess)
+    mockDb.prepare.mockReturnValueOnce(deleteStmtTemplateSuccess)
 
-    const result = stmt.run(templateId, exerciseId)
-    return result.changes > 0
-  }
+    const success = WorkoutTemplateModel.delete(5)
+    expect(success).toBe(true)
 
-  static update(id: number, template: Partial<WorkoutTemplate>): WorkoutTemplate | null {
-    const fields = []
-    const values = []
+    const deleteStmtExercisesFail = { run: jest.fn() }
+    const deleteStmtTemplateFail = { run: jest.fn().mockReturnValue({ changes: 0 }) }
 
-    if (template.name) {
-      fields.push("name = ?")
-      values.push(template.name)
-    }
-    if (template.description !== undefined) {
-      fields.push("description = ?")
-      values.push(template.description)
-    }
+    mockDb.prepare.mockReturnValueOnce(deleteStmtExercisesFail)
+    mockDb.prepare.mockReturnValueOnce(deleteStmtTemplateFail)
 
-    fields.push("updated_at = CURRENT_TIMESTAMP")
-    values.push(id)
+    const fail = WorkoutTemplateModel.delete(999)
+    expect(fail).toBe(false)
+  })
 
-    const stmt = db.prepare(`
-      UPDATE workout_templates 
-      SET ${fields.join(", ")} 
-      WHERE id = ?
-    `)
+  // -------------------- FIND BY ID WITH EXERCISES --------------------
+  describe("findByIdWithExercises", () => {
+    it("deve retornar template com exercises quando encontrado", () => {
+      const mockLogs = [{ id: 10, exercise_id: 2, exercise_name: "Ex", muscle_group: "Peito" }]
 
-    stmt.run(...values)
-    return this.findById(id)
-  }
+      const findByIdSpy = jest.spyOn(WorkoutTemplateModel, "findById").mockReturnValue(mockTemplate)
 
-  static delete(id: number): boolean {
-  
-  db.prepare("DELETE FROM workout_template_exercises WHERE workout_template_id = ?")
-    .run(id)
+      const stmtExercises = { all: jest.fn().mockReturnValue(mockLogs) }
+      mockDb.prepare.mockReturnValue(stmtExercises)
 
-  
-  const stmt = db.prepare("DELETE FROM workout_templates WHERE id = ?")
-  const result = stmt.run(id)
+      const result = WorkoutTemplateModel.findByIdWithExercises(5)
 
-  return result.changes > 0
-}
+      expect(result).toEqual({ ...mockTemplate, exercises: mockLogs })
+      findByIdSpy.mockRestore()
+    })
 
-  static validateTemplate(template: Partial<WorkoutTemplate>): string[] {
-    const errors: string[] = []
+    it("deve retornar template com array vazio", () => {
+      const findByIdSpy = jest.spyOn(WorkoutTemplateModel, "findById").mockReturnValue(mockTemplate)
 
-    if (!template.name || template.name.trim().length === 0) {
-      errors.push("Nome da ficha é obrigatório")
-    }
+      const stmtExercises = { all: jest.fn().mockReturnValue([]) }
+      mockDb.prepare.mockReturnValue(stmtExercises)
 
-    return errors
-  }
+      const result = WorkoutTemplateModel.findByIdWithExercises(5)
 
-  static validateTemplateExercise(exercise: Partial<WorkoutTemplateExercise>): string[] {
-    const errors: string[] = []
+      expect(result).toEqual({ ...mockTemplate, exercises: [] })
+      findByIdSpy.mockRestore()
+    })
 
-    if (!exercise.exercise_id || exercise.exercise_id <= 0) {
-      errors.push("Exercício é obrigatório")
-    }
+    it("deve retornar null se não encontrar o template", () => {
+      const findByIdSpy = jest.spyOn(WorkoutTemplateModel, "findById").mockReturnValue(null)
 
-    if (!exercise.sets || exercise.sets <= 0) {
-      errors.push("Número de séries deve ser maior que zero")
-    }
+      const result = WorkoutTemplateModel.findByIdWithExercises(999)
 
-    if (!exercise.reps || exercise.reps <= 0) {
-      errors.push("Número de repetições deve ser maior que zero")
-    }
+      expect(result).toBeNull()
+      findByIdSpy.mockRestore()
+    })
+  })
 
-    if (exercise.initial_weight !== undefined && exercise.initial_weight < 0) {
-      errors.push("Peso inicial não pode ser negativo")
-    }
+  // -------------------- UPDATE --------------------
+  describe("update", () => {
+    let findByIdSpy: jest.SpyInstance
 
-    if (exercise.rest_seconds !== undefined && exercise.rest_seconds < 0) {
-      errors.push("Tempo de descanso não pode ser negativo")
-    }
+    beforeEach(() => {
+      findByIdSpy = jest
+        .spyOn(WorkoutTemplateModel, "findById")
+        .mockImplementation((id) => (id === 5 ? mockTemplate : null))
+    })
 
-    return errors
-  }
-}
+    afterEach(() => {
+      findByIdSpy.mockRestore()
+    })
+
+    it("update: deve atualizar nome e descrição", () => {
+      const updateStmt = { run: jest.fn() }
+      mockDb.prepare.mockReturnValue(updateStmt)
+
+      WorkoutTemplateModel.update(5, { name: "W5-upd", description: "x" })
+
+      expect(updateStmt.run).toHaveBeenCalledWith("W5-upd", "x", 5)
+    })
+
+    it("update: deve atualizar apenas o nome", () => {
+      const updateStmt = { run: jest.fn() }
+      mockDb.prepare.mockReturnValue(updateStmt)
+
+      WorkoutTemplateModel.update(5, { name: "W5-only-name" })
+
+      expect(updateStmt.run).toHaveBeenCalledWith("W5-only-name", 5)
+    })
+
+    it("update: deve atualizar apenas a descrição", () => {
+      const updateStmt = { run: jest.fn() }
+      mockDb.prepare.mockReturnValue(updateStmt)
+
+      WorkoutTemplateModel.update(5, { description: "only-desc" })
+
+      expect(updateStmt.run).toHaveBeenCalledWith("only-desc", 5)
+    })
+
+    it("update: deve permitir descrição vazia", () => {
+      const updateStmt = { run: jest.fn() }
+      mockDb.prepare.mockReturnValue(updateStmt)
+
+      WorkoutTemplateModel.update(5, { description: "" })
+
+      expect(updateStmt.run).toHaveBeenCalledWith("", 5)
+    })
+  })
+
+  // -------------------- EXERCISES --------------------
+  describe("Exercise management", () => {
+    it("addExercise: deve retornar true ou false corretamente", () => {
+      const addSuccess = { run: jest.fn().mockReturnValue({ changes: 1 }) }
+      mockDb.prepare.mockReturnValueOnce(addSuccess)
+
+      expect(WorkoutTemplateModel.addExercise(5, mockExercise)).toBe(true)
+
+      const addFail = { run: jest.fn().mockReturnValue({ changes: 0 }) }
+      mockDb.prepare.mockReturnValueOnce(addFail)
+
+      expect(WorkoutTemplateModel.addExercise(5, mockExercise)).toBe(false)
+    })
+
+    it("removeExercise: deve retornar true ou false corretamente", () => {
+      const delSuccess = { run: jest.fn().mockReturnValue({ changes: 1 }) }
+      mockDb.prepare.mockReturnValueOnce(delSuccess)
+      expect(WorkoutTemplateModel.removeExercise(5, 2)).toBe(true)
+
+      const delFail = { run: jest.fn().mockReturnValue({ changes: 0 }) }
+      mockDb.prepare.mockReturnValueOnce(delFail)
+      expect(WorkoutTemplateModel.removeExercise(5, 2)).toBe(false)
+    })
+  })
+
+  // -------------------- VALIDATION --------------------
+  describe("Validation", () => {
+    it("validateTemplate: erros e válido", () => {
+      expect(WorkoutTemplateModel.validateTemplate({ name: "   " })).toContain("Nome da ficha é obrigatório")
+      expect(WorkoutTemplateModel.validateTemplate({ name: "W6" })).toHaveLength(0)
+    })
+
+    it("validateTemplateExercise: válido", () => {
+      expect(WorkoutTemplateModel.validateTemplateExercise(mockExercise)).toHaveLength(0)
+    })
+
+    it("validateTemplateExercise: sets/reps inválidos", () => {
+      expect(WorkoutTemplateModel.validateTemplateExercise({ sets: 0, exercise_id: 1 }))
+        .toContain("Número de séries deve ser maior que zero")
+
+      expect(WorkoutTemplateModel.validateTemplateExercise({ reps: -5, sets: 1, exercise_id: 1 }))
+        .toContain("Número de repetições deve ser maior que zero")
+    })
+
+    it("validateTemplateExercise: initial_weight negativo", () => {
+      expect(
+        WorkoutTemplateModel.validateTemplateExercise({ initial_weight: -1, exercise_id: 1, reps: 1, sets: 1 })
+      ).toContain("Peso inicial não pode ser negativo")
+    })
+
+    it("validateTemplateExercise: rest_seconds negativo", () => {
+      expect(
+        WorkoutTemplateModel.validateTemplateExercise({ rest_seconds: -10, exercise_id: 1, reps: 1, sets: 1 })
+      ).toContain("Tempo de descanso não pode ser negativo")
+    })
+  })
+})
