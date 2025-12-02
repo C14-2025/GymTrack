@@ -17,11 +17,11 @@ const customJestConfig = {
     "^@/(.*)$": "<rootDir>/$1",
   },
   reporters: [
-    'default', 
-    ['jest-junit', { 
-      outputDirectory: 'test-reports', 
-      outputName: 'junit.xml' 
-    }]
+    ["jest-html-reporter", {
+      pageTitle: "Relatório de Testes", 
+      outputPath: "test-reports/test-report.html", 
+      includeConsoleLog: true,
+    }],
   ],
 }
 
