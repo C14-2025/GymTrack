@@ -1,199 +1,235 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="80" failures="0" errors="0" time="9.669">
-  <testsuite name="/api/exercises" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="2.706" tests="3">
-    <testcase classname="/api/exercises GET should return exercises list" name="/api/exercises GET should return exercises list" time="0.01">
+<testsuites name="jest tests" tests="97" failures="0" errors="0" time="6.646">
+  <testsuite name="/api/exercises" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.865" tests="3">
+    <testcase classname="/api/exercises GET should return exercises list" name="/api/exercises GET should return exercises list" time="0.008">
     </testcase>
     <testcase classname="/api/exercises POST should create new exercise" name="/api/exercises POST should create new exercise" time="0.002">
     </testcase>
-    <testcase classname="/api/exercises POST should validate required fields" name="/api/exercises POST should validate required fields" time="0.001">
+    <testcase classname="/api/exercises POST should validate required fields" name="/api/exercises POST should validate required fields" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="API /api/workouts/[id]/exercises route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="2.997" tests="6">
-    <testcase classname="API /api/workouts/[id]/exercises route POST adiciona exercício ao template com dados válidos" name="API /api/workouts/[id]/exercises route POST adiciona exercício ao template com dados válidos" time="0.03">
+  <testsuite name="API /api/workouts/[id]/exercises route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.883" tests="6">
+    <testcase classname="API /api/workouts/[id]/exercises route POST adiciona exercício ao template com dados válidos" name="API /api/workouts/[id]/exercises route POST adiciona exercício ao template com dados válidos" time="0.031">
     </testcase>
-    <testcase classname="API /api/workouts/[id]/exercises route POST retorna 400 para dados inválidos" name="API /api/workouts/[id]/exercises route POST retorna 400 para dados inválidos" time="0.003">
+    <testcase classname="API /api/workouts/[id]/exercises route POST retorna 400 para dados inválidos" name="API /api/workouts/[id]/exercises route POST retorna 400 para dados inválidos" time="0.002">
     </testcase>
-    <testcase classname="API /api/workouts/[id]/exercises route POST retorna 400 quando template não existe" name="API /api/workouts/[id]/exercises route POST retorna 400 quando template não existe" time="0.002">
+    <testcase classname="API /api/workouts/[id]/exercises route POST retorna 400 quando template não existe" name="API /api/workouts/[id]/exercises route POST retorna 400 quando template não existe" time="0.001">
     </testcase>
-    <testcase classname="API /api/workouts/[id]/exercises route DELETE remove exercício do template" name="API /api/workouts/[id]/exercises route DELETE remove exercício do template" time="0.001">
+    <testcase classname="API /api/workouts/[id]/exercises route DELETE remove exercício do template" name="API /api/workouts/[id]/exercises route DELETE remove exercício do template" time="0.002">
     </testcase>
-    <testcase classname="API /api/workouts/[id]/exercises route DELETE retorna 404 quando exercício não está no template" name="API /api/workouts/[id]/exercises route DELETE retorna 404 quando exercício não está no template" time="0.001">
+    <testcase classname="API /api/workouts/[id]/exercises route DELETE retorna 404 quando exercício não está no template" name="API /api/workouts/[id]/exercises route DELETE retorna 404 quando exercício não está no template" time="0.003">
     </testcase>
-    <testcase classname="API /api/workouts/[id]/exercises route DELETE retorna 400 quando exercise_id não é fornecido" name="API /api/workouts/[id]/exercises route DELETE retorna 400 quando exercise_id não é fornecido" time="0.001">
+    <testcase classname="API /api/workouts/[id]/exercises route DELETE retorna 400 quando exercise_id não é fornecido" name="API /api/workouts/[id]/exercises route DELETE retorna 400 quando exercise_id não é fornecido" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="API /api/sessions/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="2.999" tests="7">
-    <testcase classname="API /api/sessions/[id] route GET retorna sessão com logs quando existe" name="API /api/sessions/[id] route GET retorna sessão com logs quando existe" time="0.025">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.868" tests="1">
+    <testcase classname=" WorkoutTemplateModel: create/findByIdWithExercises/add/remove/update/validation" name=" WorkoutTemplateModel: create/findByIdWithExercises/add/remove/update/validation" time="0.033">
     </testcase>
-    <testcase classname="API /api/sessions/[id] route GET retorna 404 quando sessão não existe" name="API /api/sessions/[id] route GET retorna 404 quando sessão não existe" time="0.001">
+  </testsuite>
+  <testsuite name="API /api/sessions/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.9" tests="7">
+    <testcase classname="API /api/sessions/[id] route GET retorna sessão com logs quando existe" name="API /api/sessions/[id] route GET retorna sessão com logs quando existe" time="0.033">
     </testcase>
-    <testcase classname="API /api/sessions/[id] route PUT atualiza sessão com dados válidos" name="API /api/sessions/[id] route PUT atualiza sessão com dados válidos" time="0.002">
+    <testcase classname="API /api/sessions/[id] route GET retorna 404 quando sessão não existe" name="API /api/sessions/[id] route GET retorna 404 quando sessão não existe" time="0.003">
+    </testcase>
+    <testcase classname="API /api/sessions/[id] route PUT atualiza sessão com dados válidos" name="API /api/sessions/[id] route PUT atualiza sessão com dados válidos" time="0.009">
     </testcase>
     <testcase classname="API /api/sessions/[id] route PUT retorna 400 para dados inválidos" name="API /api/sessions/[id] route PUT retorna 400 para dados inválidos" time="0.001">
     </testcase>
     <testcase classname="API /api/sessions/[id] route PUT retorna 404 quando sessão não existe" name="API /api/sessions/[id] route PUT retorna 404 quando sessão não existe" time="0.001">
     </testcase>
-    <testcase classname="API /api/sessions/[id] route DELETE exclui sessão com sucesso" name="API /api/sessions/[id] route DELETE exclui sessão com sucesso" time="0.038">
+    <testcase classname="API /api/sessions/[id] route DELETE exclui sessão com sucesso" name="API /api/sessions/[id] route DELETE exclui sessão com sucesso" time="0.004">
     </testcase>
     <testcase classname="API /api/sessions/[id] route DELETE retorna 404 quando sessão não existe" name="API /api/sessions/[id] route DELETE retorna 404 quando sessão não existe" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="POST /api/sessions/[id]/logs" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="2.993" tests="4">
-    <testcase classname="POST /api/sessions/[id]/logs deve retornar 400 quando id inválido" name="POST /api/sessions/[id]/logs deve retornar 400 quando id inválido" time="0.011">
+  <testsuite name="ExerciseModel - Testes Mock" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.864" tests="2">
+    <testcase classname="ExerciseModel - Testes Mock deve criar um exercício com dados válidos" name="ExerciseModel - Testes Mock deve criar um exercício com dados válidos" time="0.011">
     </testcase>
-    <testcase classname="POST /api/sessions/[id]/logs deve retornar 400 quando validação falha" name="POST /api/sessions/[id]/logs deve retornar 400 quando validação falha" time="0.002">
-    </testcase>
-    <testcase classname="POST /api/sessions/[id]/logs deve criar log e retornar 201 quando válido" name="POST /api/sessions/[id]/logs deve criar log e retornar 201 quando válido" time="0.004">
-    </testcase>
-    <testcase classname="POST /api/sessions/[id]/logs se ExerciseLogModel.create lançar erro, rota retorna 500" name="POST /api/sessions/[id]/logs se ExerciseLogModel.create lançar erro, rota retorna 500" time="0.053">
+    <testcase classname="ExerciseModel - Testes Mock deve criar exercício com campos opcionais nulos" name="ExerciseModel - Testes Mock deve criar exercício com campos opcionais nulos" time="0.002">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.042" tests="8">
-    <testcase classname=" create log" name=" create log" time="0.041">
-    </testcase>
-    <testcase classname=" findById" name=" findById" time="0.007">
-    </testcase>
-    <testcase classname=" findBySessionId" name=" findBySessionId" time="0.014">
-    </testcase>
-    <testcase classname=" findByExerciseId" name=" findByExerciseId" time="0.011">
-    </testcase>
-    <testcase classname=" update (with fields)" name=" update (with fields)" time="0.012">
-    </testcase>
-    <testcase classname=" update (no fields)" name=" update (no fields)" time="0.007">
-    </testcase>
-    <testcase classname=" delete" name=" delete" time="0.027">
-    </testcase>
-    <testcase classname=" validateLog" name=" validateLog" time="0.008">
-    </testcase>
-  </testsuite>
-  <testsuite name="ExerciseModel - Testes Mock" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.194" tests="2">
-    <testcase classname="ExerciseModel - Testes Mock deve criar um exercício com dados válidos" name="ExerciseModel - Testes Mock deve criar um exercício com dados válidos" time="0.034">
-    </testcase>
-    <testcase classname="ExerciseModel - Testes Mock deve criar exercício com campos opcionais nulos" name="ExerciseModel - Testes Mock deve criar exercício com campos opcionais nulos" time="0.003">
-    </testcase>
-  </testsuite>
-  <testsuite name="API /api/exercises/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.265" tests="13">
-    <testcase classname="API /api/exercises/[id] route GET retorna 200 e objeto quando existe" name="API /api/exercises/[id] route GET retorna 200 e objeto quando existe" time="0.023">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route GET retorna 404 quando nao existe" name="API /api/exercises/[id] route GET retorna 404 quando nao existe" time="0.005">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route DELETE retorna 200 quando exclui" name="API /api/exercises/[id] route DELETE retorna 200 quando exclui" time="0.053">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route DELETE retorna 404 quando nao encontra" name="API /api/exercises/[id] route DELETE retorna 404 quando nao encontra" time="0.005">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route GET retorna 400 quando id é inválido" name="API /api/exercises/[id] route GET retorna 400 quando id é inválido" time="0.004">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route GET retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route GET retorna 500 quando ocorre erro interno" time="0.112">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route PUT retorna 400 quando id é inválido" name="API /api/exercises/[id] route PUT retorna 400 quando id é inválido" time="0.006">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route PUT retorna 400 quando validateExercise retorna erros" name="API /api/exercises/[id] route PUT retorna 400 quando validateExercise retorna erros" time="0.079">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route PUT retorna 404 quando update retorna null" name="API /api/exercises/[id] route PUT retorna 404 quando update retorna null" time="0.006">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route PUT retorna 200 quando atualiza com sucesso" name="API /api/exercises/[id] route PUT retorna 200 quando atualiza com sucesso" time="0.011">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route PUT retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route PUT retorna 500 quando ocorre erro interno" time="0.01">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route DELETE retorna 400 quando id é inválido" name="API /api/exercises/[id] route DELETE retorna 400 quando id é inválido" time="0.025">
-    </testcase>
-    <testcase classname="API /api/exercises/[id] route DELETE retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route DELETE retorna 500 quando ocorre erro interno" time="0.013">
-    </testcase>
-  </testsuite>
-  <testsuite name="API /api/exercises route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.431" tests="6">
-    <testcase classname="API /api/exercises route GET deve retornar lista e status 200" name="API /api/exercises route GET deve retornar lista e status 200" time="0.018">
+  <testsuite name="API /api/exercises route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.953" tests="6">
+    <testcase classname="API /api/exercises route GET deve retornar lista e status 200" name="API /api/exercises route GET deve retornar lista e status 200" time="0.012">
     </testcase>
     <testcase classname="API /api/exercises route POST cria novo exercício quando válido" name="API /api/exercises route POST cria novo exercício quando válido" time="0.002">
     </testcase>
-    <testcase classname="API /api/exercises route POST retorna 400 quando validação falha" name="API /api/exercises route POST retorna 400 quando validação falha" time="0.004">
+    <testcase classname="API /api/exercises route POST retorna 400 quando validação falha" name="API /api/exercises route POST retorna 400 quando validação falha" time="0.001">
     </testcase>
-    <testcase classname="API /api/exercises route GET retorna 500 em caso de erro interno do servidor" name="API /api/exercises route GET retorna 500 em caso de erro interno do servidor" time="0.278">
+    <testcase classname="API /api/exercises route GET retorna 500 em caso de erro interno do servidor" name="API /api/exercises route GET retorna 500 em caso de erro interno do servidor" time="0.083">
     </testcase>
-    <testcase classname="API /api/exercises route POST retorna 409 quando o nome do exercício já existe" name="API /api/exercises route POST retorna 409 quando o nome do exercício já existe" time="0.005">
+    <testcase classname="API /api/exercises route POST retorna 409 quando o nome do exercício já existe" name="API /api/exercises route POST retorna 409 quando o nome do exercício já existe" time="0.001">
     </testcase>
-    <testcase classname="API /api/exercises route POST retorna 500 em caso de erro interno (ex: falha ao salvar no DB ou parse do JSON)" name="API /api/exercises route POST retorna 500 em caso de erro interno (ex: falha ao salvar no DB ou parse do JSON)" time="0.007">
-    </testcase>
-  </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.243" tests="1">
-    <testcase classname=" WorkoutTemplateModel: create/findByIdWithExercises/add/remove/update/validation" name=" WorkoutTemplateModel: create/findByIdWithExercises/add/remove/update/validation" time="0.239">
+    <testcase classname="API /api/exercises route POST retorna 500 em caso de erro interno (ex: falha ao salvar no DB ou parse do JSON)" name="API /api/exercises route POST retorna 500 em caso de erro interno (ex: falha ao salvar no DB ou parse do JSON)" time="0.006">
     </testcase>
   </testsuite>
-  <testsuite name="API /api/logs/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.198" tests="10">
-    <testcase classname="API /api/logs/[id] route PUT atualiza log com dados válidos" name="API /api/logs/[id] route PUT atualiza log com dados válidos" time="0.176">
+  <testsuite name="POST /api/sessions/[id]/logs" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.96" tests="4">
+    <testcase classname="POST /api/sessions/[id]/logs deve retornar 400 quando id inválido" name="POST /api/sessions/[id]/logs deve retornar 400 quando id inválido" time="0.015">
     </testcase>
-    <testcase classname="API /api/logs/[id] route PUT retorna 400 se o ID for inválido" name="API /api/logs/[id] route PUT retorna 400 se o ID for inválido" time="0.007">
+    <testcase classname="POST /api/sessions/[id]/logs deve retornar 400 quando validação falha" name="POST /api/sessions/[id]/logs deve retornar 400 quando validação falha" time="0.003">
     </testcase>
-    <testcase classname="API /api/logs/[id] route PUT retorna 400 para dados inválidos" name="API /api/logs/[id] route PUT retorna 400 para dados inválidos" time="0.003">
+    <testcase classname="POST /api/sessions/[id]/logs deve criar log e retornar 201 quando válido" name="POST /api/sessions/[id]/logs deve criar log e retornar 201 quando válido" time="0.006">
     </testcase>
-    <testcase classname="API /api/logs/[id] route PUT retorna 404 quando log não existe" name="API /api/logs/[id] route PUT retorna 404 quando log não existe" time="0.009">
+    <testcase classname="POST /api/sessions/[id]/logs se ExerciseLogModel.create lançar erro, rota retorna 500" name="POST /api/sessions/[id]/logs se ExerciseLogModel.create lançar erro, rota retorna 500" time="0.079">
     </testcase>
-    <testcase classname="API /api/logs/[id] route PUT retorna 500 em caso de erro interno do servidor" name="API /api/logs/[id] route PUT retorna 500 em caso de erro interno do servidor" time="0.177">
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="1.965" tests="8">
+    <testcase classname=" create log" name=" create log" time="0.035">
     </testcase>
-    <testcase classname="API /api/logs/[id] route DELETE exclui log com sucesso" name="API /api/logs/[id] route DELETE exclui log com sucesso" time="0.002">
+    <testcase classname=" findById" name=" findById" time="0.006">
     </testcase>
-    <testcase classname="API /api/logs/[id] route DELETE retorna 400 se o ID for inválido" name="API /api/logs/[id] route DELETE retorna 400 se o ID for inválido" time="0.001">
+    <testcase classname=" findBySessionId" name=" findBySessionId" time="0.006">
     </testcase>
-    <testcase classname="API /api/logs/[id] route DELETE retorna 404 quando log não existe" name="API /api/logs/[id] route DELETE retorna 404 quando log não existe" time="0.003">
+    <testcase classname=" findByExerciseId" name=" findByExerciseId" time="0.008">
     </testcase>
-    <testcase classname="API /api/logs/[id] route DELETE não permite excluir log de sessão finalizada (400)" name="API /api/logs/[id] route DELETE não permite excluir log de sessão finalizada (400)" time="0.002">
+    <testcase classname=" update (with fields)" name=" update (with fields)" time="0.021">
+    </testcase>
+    <testcase classname=" update (no fields)" name=" update (no fields)" time="0.019">
+    </testcase>
+    <testcase classname=" delete" name=" delete" time="0.007">
+    </testcase>
+    <testcase classname=" validateLog" name=" validateLog" time="0.007">
+    </testcase>
+  </testsuite>
+  <testsuite name="API /api/logs/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="2.061" tests="10">
+    <testcase classname="API /api/logs/[id] route PUT atualiza log com dados válidos" name="API /api/logs/[id] route PUT atualiza log com dados válidos" time="0.029">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route PUT retorna 400 se o ID for inválido" name="API /api/logs/[id] route PUT retorna 400 se o ID for inválido" time="0.009">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route PUT retorna 400 para dados inválidos" name="API /api/logs/[id] route PUT retorna 400 para dados inválidos" time="0.022">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route PUT retorna 404 quando log não existe" name="API /api/logs/[id] route PUT retorna 404 quando log não existe" time="0.004">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route PUT retorna 500 em caso de erro interno do servidor" name="API /api/logs/[id] route PUT retorna 500 em caso de erro interno do servidor" time="0.103">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route DELETE exclui log com sucesso" name="API /api/logs/[id] route DELETE exclui log com sucesso" time="0.003">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route DELETE retorna 400 se o ID for inválido" name="API /api/logs/[id] route DELETE retorna 400 se o ID for inválido" time="0.002">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route DELETE retorna 404 quando log não existe" name="API /api/logs/[id] route DELETE retorna 404 quando log não existe" time="0.001">
+    </testcase>
+    <testcase classname="API /api/logs/[id] route DELETE não permite excluir log de sessão finalizada (400)" name="API /api/logs/[id] route DELETE não permite excluir log de sessão finalizada (400)" time="0.001">
     </testcase>
     <testcase classname="API /api/logs/[id] route DELETE retorna 500 em caso de erro interno genérico" name="API /api/logs/[id] route DELETE retorna 500 em caso de erro interno genérico" time="0.006">
     </testcase>
   </testsuite>
-  <testsuite name="API /api/sessions" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:54" time="3.549" tests="3">
-    <testcase classname="API /api/sessions POST deve criar uma sessão" name="API /api/sessions POST deve criar uma sessão" time="0.067">
+  <testsuite name="API /api/exercises/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="2.083" tests="13">
+    <testcase classname="API /api/exercises/[id] route GET retorna 200 e objeto quando existe" name="API /api/exercises/[id] route GET retorna 200 e objeto quando existe" time="0.023">
     </testcase>
-    <testcase classname="API /api/sessions POST deve retornar erro para dados inválidos" name="API /api/sessions POST deve retornar erro para dados inválidos" time="0.029">
+    <testcase classname="API /api/exercises/[id] route GET retorna 404 quando nao existe" name="API /api/exercises/[id] route GET retorna 404 quando nao existe" time="0.005">
     </testcase>
-    <testcase classname="API /api/sessions GET deve listar sessões" name="API /api/sessions GET deve listar sessões" time="0.041">
+    <testcase classname="API /api/exercises/[id] route DELETE retorna 200 quando exclui" name="API /api/exercises/[id] route DELETE retorna 200 quando exclui" time="0.073">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route DELETE retorna 404 quando nao encontra" name="API /api/exercises/[id] route DELETE retorna 404 quando nao encontra" time="0.006">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route GET retorna 400 quando id é inválido" name="API /api/exercises/[id] route GET retorna 400 quando id é inválido" time="0.005">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route GET retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route GET retorna 500 quando ocorre erro interno" time="0.094">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route PUT retorna 400 quando id é inválido" name="API /api/exercises/[id] route PUT retorna 400 quando id é inválido" time="0.004">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route PUT retorna 400 quando validateExercise retorna erros" name="API /api/exercises/[id] route PUT retorna 400 quando validateExercise retorna erros" time="0.009">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route PUT retorna 404 quando update retorna null" name="API /api/exercises/[id] route PUT retorna 404 quando update retorna null" time="0.005">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route PUT retorna 200 quando atualiza com sucesso" name="API /api/exercises/[id] route PUT retorna 200 quando atualiza com sucesso" time="0.005">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route PUT retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route PUT retorna 500 quando ocorre erro interno" time="0.005">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route DELETE retorna 400 quando id é inválido" name="API /api/exercises/[id] route DELETE retorna 400 quando id é inválido" time="0.006">
+    </testcase>
+    <testcase classname="API /api/exercises/[id] route DELETE retorna 500 quando ocorre erro interno" name="API /api/exercises/[id] route DELETE retorna 500 quando ocorre erro interno" time="0.005">
     </testcase>
   </testsuite>
-  <testsuite name="API /api/workouts/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:57" time="0.84" tests="3">
-    <testcase classname="API /api/workouts/[id] route GET retorna template com exercises" name="API /api/workouts/[id] route GET retorna template com exercises" time="0.024">
+  <testsuite name="API /api/sessions" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:27" time="2.336" tests="3">
+    <testcase classname="API /api/sessions POST deve criar uma sessão" name="API /api/sessions POST deve criar uma sessão" time="0.111">
     </testcase>
-    <testcase classname="API /api/workouts/[id] route DELETE retorna 200 quando exclui" name="API /api/workouts/[id] route DELETE retorna 200 quando exclui" time="0.005">
+    <testcase classname="API /api/sessions POST deve retornar erro para dados inválidos" name="API /api/sessions POST deve retornar erro para dados inválidos" time="0.054">
     </testcase>
-    <testcase classname="API /api/workouts/[id] route PUT atualiza e retorna 200" name="API /api/workouts/[id] route PUT atualiza e retorna 200" time="0.006">
+    <testcase classname="API /api/sessions GET deve listar sessões" name="API /api/sessions GET deve listar sessões" time="0.038">
     </testcase>
   </testsuite>
-  <testsuite name="ExerciseModel (unit) - isolated module loading" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:57" time="0.675" tests="3">
-    <testcase classname="ExerciseModel (unit) - isolated module loading create deve inserir e retornar o registro criado" name="ExerciseModel (unit) - isolated module loading create deve inserir e retornar o registro criado" time="0.014">
+  <testsuite name="ExerciseModel (unit) - isolated module loading" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.524" tests="3">
+    <testcase classname="ExerciseModel (unit) - isolated module loading create deve inserir e retornar o registro criado" name="ExerciseModel (unit) - isolated module loading create deve inserir e retornar o registro criado" time="0.028">
     </testcase>
     <testcase classname="ExerciseModel (unit) - isolated module loading findAll retorna lista e findById funciona" name="ExerciseModel (unit) - isolated module loading findAll retorna lista e findById funciona" time="0.007">
     </testcase>
-    <testcase classname="ExerciseModel (unit) - isolated module loading validateExercise detecta erros de campos obrigatórios" name="ExerciseModel (unit) - isolated module loading validateExercise detecta erros de campos obrigatórios" time="0.01">
+    <testcase classname="ExerciseModel (unit) - isolated module loading validateExercise detecta erros de campos obrigatórios" name="ExerciseModel (unit) - isolated module loading validateExercise detecta erros de campos obrigatórios" time="0.007">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:57" time="0.592" tests="1">
-    <testcase classname=" WorkoutSessionModel: create/findAll/findByTemplateId/update/delete/validate" name=" WorkoutSessionModel: create/findAll/findByTemplateId/update/delete/validate" time="0.026">
+  <testsuite name="API /api/workouts/[id] route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.575" tests="3">
+    <testcase classname="API /api/workouts/[id] route GET retorna template com exercises" name="API /api/workouts/[id] route GET retorna template com exercises" time="0.028">
+    </testcase>
+    <testcase classname="API /api/workouts/[id] route DELETE retorna 200 quando exclui" name="API /api/workouts/[id] route DELETE retorna 200 quando exclui" time="0.007">
+    </testcase>
+    <testcase classname="API /api/workouts/[id] route PUT atualiza e retorna 200" name="API /api/workouts/[id] route PUT atualiza e retorna 200" time="0.012">
     </testcase>
   </testsuite>
-  <testsuite name="GET /api/exercises/[id]/evolution" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:57" time="0.937" tests="4">
-    <testcase classname="GET /api/exercises/[id]/evolution retorna evolution e progress" name="GET /api/exercises/[id]/evolution retorna evolution e progress" time="0.026">
+  <testsuite name="GET /api/exercises/[id]/evolution" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.636" tests="4">
+    <testcase classname="GET /api/exercises/[id]/evolution retorna evolution e progress" name="GET /api/exercises/[id]/evolution retorna evolution e progress" time="0.02">
     </testcase>
-    <testcase classname="GET /api/exercises/[id]/evolution GET retorna 400 se o ID for inválido" name="GET /api/exercises/[id]/evolution GET retorna 400 se o ID for inválido" time="0.007">
+    <testcase classname="GET /api/exercises/[id]/evolution GET retorna 400 se o ID for inválido" name="GET /api/exercises/[id]/evolution GET retorna 400 se o ID for inválido" time="0.008">
     </testcase>
-    <testcase classname="GET /api/exercises/[id]/evolution GET retorna 500 em caso de erro interno do servidor" name="GET /api/exercises/[id]/evolution GET retorna 500 em caso de erro interno do servidor" time="0.043">
+    <testcase classname="GET /api/exercises/[id]/evolution GET retorna 500 em caso de erro interno do servidor" name="GET /api/exercises/[id]/evolution GET retorna 500 em caso de erro interno do servidor" time="0.055">
     </testcase>
-    <testcase classname="GET /api/exercises/[id]/evolution retorna dados zerados quando não há logs de exercícios" name="GET /api/exercises/[id]/evolution retorna dados zerados quando não há logs de exercícios" time="0.027">
-    </testcase>
-  </testsuite>
-  <testsuite name="API /api/workouts route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:57" time="0.789" tests="3">
-    <testcase classname="API /api/workouts route GET retorna lista de templates" name="API /api/workouts route GET retorna lista de templates" time="0.017">
-    </testcase>
-    <testcase classname="API /api/workouts route POST valida e cria template" name="API /api/workouts route POST valida e cria template" time="0.01">
-    </testcase>
-    <testcase classname="API /api/workouts route POST retorna 400 para dados invalidos" name="API /api/workouts route POST retorna 400 para dados invalidos" time="0.005">
+    <testcase classname="GET /api/exercises/[id]/evolution retorna dados zerados quando não há logs de exercícios" name="GET /api/exercises/[id]/evolution retorna dados zerados quando não há logs de exercícios" time="0.012">
     </testcase>
   </testsuite>
-  <testsuite name="WorkoutTemplateModel (isolated module loading)" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:58" time="0.624" tests="2">
-    <testcase classname="WorkoutTemplateModel (isolated module loading) create retorna template criado" name="WorkoutTemplateModel (isolated module loading) create retorna template criado" time="0.012">
+  <testsuite name="WorkoutTemplateModel (isolated module loading)" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.571" tests="2">
+    <testcase classname="WorkoutTemplateModel (isolated module loading) create retorna template criado" name="WorkoutTemplateModel (isolated module loading) create retorna template criado" time="0.02">
     </testcase>
-    <testcase classname="WorkoutTemplateModel (isolated module loading) findAll retorna array e findById retorna item" name="WorkoutTemplateModel (isolated module loading) findAll retorna array e findById retorna item" time="0.007">
+    <testcase classname="WorkoutTemplateModel (isolated module loading) findAll retorna array e findById retorna item" name="WorkoutTemplateModel (isolated module loading) findAll retorna array e findById retorna item" time="0.008">
     </testcase>
   </testsuite>
-  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:12:58" time="0.498" tests="1">
-    <testcase classname=" ExerciseModel: create/findAll/findById/findByMuscleGroup/update/delete/validate" name=" ExerciseModel: create/findAll/findById/findByMuscleGroup/update/delete/validate" time="0.025">
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.576" tests="1">
+    <testcase classname=" WorkoutSessionModel: create/findAll/findByTemplateId/update/delete/validate" name=" WorkoutSessionModel: create/findAll/findByTemplateId/update/delete/validate" time="0.02">
+    </testcase>
+  </testsuite>
+  <testsuite name="undefined" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.574" tests="1">
+    <testcase classname=" ExerciseModel: create/findAll/findById/findByMuscleGroup/update/delete/validate" name=" ExerciseModel: create/findAll/findById/findByMuscleGroup/update/delete/validate" time="0.017">
+    </testcase>
+  </testsuite>
+  <testsuite name="API /api/workouts route" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.598" tests="3">
+    <testcase classname="API /api/workouts route GET retorna lista de templates" name="API /api/workouts route GET retorna lista de templates" time="0.012">
+    </testcase>
+    <testcase classname="API /api/workouts route POST valida e cria template" name="API /api/workouts route POST valida e cria template" time="0.005">
+    </testcase>
+    <testcase classname="API /api/workouts route POST retorna 400 para dados invalidos" name="API /api/workouts route POST retorna 400 para dados invalidos" time="0.004">
+    </testcase>
+  </testsuite>
+  <testsuite name="WorkoutTemplateModelTest" errors="0" failures="0" skipped="0" timestamp="2025-12-02T12:42:29" time="0.834" tests="17">
+    <testcase classname="WorkoutTemplateModelTest create: deve inserir e retornar o template criado" name="WorkoutTemplateModelTest create: deve inserir e retornar o template criado" time="0.005">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest create: deve lidar com description undefined (usa null)" name="WorkoutTemplateModelTest create: deve lidar com description undefined (usa null)" time="0.002">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest delete: deve retornar true se deletar e false se não encontrar [BRANCH COVERAGE]" name="WorkoutTemplateModelTest delete: deve retornar true se deletar e false se não encontrar [BRANCH COVERAGE]" time="0.002">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest findByIdWithExercises deve retornar template com exercises quando encontrado" name="WorkoutTemplateModelTest findByIdWithExercises deve retornar template com exercises quando encontrado" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest findByIdWithExercises deve retornar template com array vazio" name="WorkoutTemplateModelTest findByIdWithExercises deve retornar template com array vazio" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest findByIdWithExercises deve retornar null se não encontrar o template" name="WorkoutTemplateModelTest findByIdWithExercises deve retornar null se não encontrar o template" time="0">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest update update: deve atualizar nome e descrição" name="WorkoutTemplateModelTest update update: deve atualizar nome e descrição" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest update update: deve atualizar apenas o nome" name="WorkoutTemplateModelTest update update: deve atualizar apenas o nome" time="0">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest update update: deve atualizar apenas a descrição" name="WorkoutTemplateModelTest update update: deve atualizar apenas a descrição" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest update update: deve permitir descrição vazia" name="WorkoutTemplateModelTest update update: deve permitir descrição vazia" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Exercise management addExercise: deve retornar true ou false corretamente" name="WorkoutTemplateModelTest Exercise management addExercise: deve retornar true ou false corretamente" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Exercise management removeExercise: deve retornar true ou false corretamente" name="WorkoutTemplateModelTest Exercise management removeExercise: deve retornar true ou false corretamente" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Validation validateTemplate: erros e válido" name="WorkoutTemplateModelTest Validation validateTemplate: erros e válido" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Validation validateTemplateExercise: válido" name="WorkoutTemplateModelTest Validation validateTemplateExercise: válido" time="0.001">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Validation validateTemplateExercise: sets/reps inválidos" name="WorkoutTemplateModelTest Validation validateTemplateExercise: sets/reps inválidos" time="0.005">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Validation validateTemplateExercise: initial_weight negativo" name="WorkoutTemplateModelTest Validation validateTemplateExercise: initial_weight negativo" time="0">
+    </testcase>
+    <testcase classname="WorkoutTemplateModelTest Validation validateTemplateExercise: rest_seconds negativo" name="WorkoutTemplateModelTest Validation validateTemplateExercise: rest_seconds negativo" time="0">
     </testcase>
   </testsuite>
 </testsuites>
