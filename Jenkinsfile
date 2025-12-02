@@ -20,6 +20,12 @@ pipeline {
                     steps {
                         sh 'npm run build'
                     }
+                    post {
+                        always {
+                            
+                            archiveArtifacts artifacts: '.next/**', fingerprint: true
+                        }
+                    }
                 }
 
                 stage('Testes de Unidade') {
