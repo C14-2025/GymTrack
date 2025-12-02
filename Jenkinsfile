@@ -23,9 +23,9 @@ pipeline {
             post {
                 always {
                     echo "📁 Salvando relatórios de teste e cobertura..."
-                    junit 'test-reports/test-report.html' 
+                    junit 'test-reports/junit.xml' 
                     archiveArtifacts artifacts: 'coverage/**' 
-                    archiveArtifacts artifacts: 'test-reports/test-report.html'
+                    archiveArtifacts artifacts: 'test-reports/junit.xml'
                 }
             }
         }
