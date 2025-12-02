@@ -17,7 +17,6 @@ pipeline {
             steps {
                 sh '''
                 echo "🧪 Rodando testes..."
-                npm install --save-dev jest-junit
                 npx jest --coverage 
                 '''
             }
