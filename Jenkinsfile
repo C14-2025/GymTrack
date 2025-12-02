@@ -9,7 +9,7 @@ pipeline {
         
         stage('Instalar Dependências') {
             steps {
-                sh 'npm install'
+                sh 'npm ci'
             }
         }
         
@@ -17,7 +17,6 @@ pipeline {
             steps {
                 sh '''
                 echo "🧪 Rodando testes..."
-                npm ci
                 npx jest --coverage 
                 '''
             }
