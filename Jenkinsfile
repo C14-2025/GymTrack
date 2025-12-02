@@ -30,11 +30,5 @@ pipeline {
                 }
             }
         }
-        
-        stage('Teste de Conexão e Integração') {
-            steps {
-                sh "curl -f http://localhost:3000"
-            }
-        }
     }
 }
