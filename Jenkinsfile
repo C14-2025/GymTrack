@@ -22,10 +22,10 @@ pipeline {
             }
             post {
                 always {
-                    echo "📁 Salvando relatórios..."
-                    junit 'test-reports/junit.xml'             
-                    archiveArtifacts 'coverage/**' 
-                    archiveArtifacts artifacts: 'test-reports/junit.xml'
+                    echo "📁 Salvando relatórios de teste e cobertura..."
+                    junit 'test-reports/test-report.html' 
+                    archiveArtifacts artifacts: 'coverage/**' 
+                    archiveArtifacts artifacts: 'test-reports/test-report.html'
                 }
             }
         }
