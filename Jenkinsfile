@@ -18,23 +18,16 @@ pipeline {
 
                 stage('Build') {
                     steps {
-                        sh '''
-                        echo "🔧 Buildando o projeto"
-                        npm run build
-                        '''
+                        sh 'npm run build'
                     }
                 }
 
                 stage('Testes de Unidade') {
                     steps {
-                        sh '''
-                        echo "🧪 Rodando testes..."
-                        npx jest --coverage
-                        '''
+                        sh 'npx jest --coverage'
                     }
                     post {
                         always {
-                            echo "📁 Salvando relatórios de teste e cobertura..."
                             junit 'test-reports/junit.xml'
                             archiveArtifacts artifacts: 'coverage/**'
                         }
@@ -44,5 +37,23 @@ pipeline {
             }
         }
 
+    }
+
+    post {
+        success {
+            emailext(
+                to: 'henrique.pereira@ges.inatel.br',
+                subject: "✔️ Sucesso no pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "O pipeline rodou com sucesso."
+            )
+        }
+
+        failure {
+            emailext(
+                to: 'henrique.pereira@ges.inatel.br',
+                subject: "❌ Falha no pipeline ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "O build falhou. Veja os logs no Jenkins."
+            )
+        }
     }
 }
