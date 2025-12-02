@@ -49,16 +49,31 @@ describe("WorkoutTemplateModelTest", () => {
     expect(insertStmt.run).toHaveBeenCalledWith("W5", null)
   })
 
+  // --- CORREÇÃO APLICADA AQUI ---
   it("delete: deve retornar true se deletar e false se não encontrar [BRANCH COVERAGE]", () => {
 
-    const deleteStmtSuccess = { run: jest.fn().mockReturnValue({ changes: 1 }) }
-    mockDb.prepare.mockReturnValueOnce(deleteStmtSuccess)
+    // --- Caso de Sucesso (2 Mocks de prepare) ---
+    // 1. Mock para a exclusão dos exercícios (primeiro db.prepare)
+    const deleteStmtExercisesSuccess = { run: jest.fn() }
+    // 2. Mock para a exclusão do template (segundo db.prepare)
+    const deleteStmtTemplateSuccess = { run: jest.fn().mockReturnValue({ changes: 1 }) }
+
+    mockDb.prepare.mockReturnValueOnce(deleteStmtExercisesSuccess)
+    mockDb.prepare.mockReturnValueOnce(deleteStmtTemplateSuccess)
+
     const success = WorkoutTemplateModel.delete(5)
     expect(success).toBe(true)
-    
 
-    const deleteStmtFail = { run: jest.fn().mockReturnValue({ changes: 0 }) }
-    mockDb.prepare.mockReturnValueOnce(deleteStmtFail)
+
+    // --- Caso de Falha (2 Mocks de prepare) ---
+    // 3. Mock para a exclusão dos exercícios
+    const deleteStmtExercisesFail = { run: jest.fn() }
+    // 4. Mock para a exclusão do template
+    const deleteStmtTemplateFail = { run: jest.fn().mockReturnValue({ changes: 0 }) }
+
+    mockDb.prepare.mockReturnValueOnce(deleteStmtExercisesFail)
+    mockDb.prepare.mockReturnValueOnce(deleteStmtTemplateFail)
+
     const fail = WorkoutTemplateModel.delete(999)
     expect(fail).toBe(false)
   })
@@ -131,7 +146,7 @@ describe("WorkoutTemplateModelTest", () => {
     })
 
     it("update: deve atualizar apenas o nome (description undefined) [BRANCH COVERAGE]", () => {
- 
+  
       const updateStmt = { run: jest.fn() }
       mockDb.prepare.mockReturnValue(updateStmt)
       
@@ -203,8 +218,8 @@ describe("WorkoutTemplateModelTest", () => {
   describe("Validation", () => {
 
     it("validateTemplate: deve retornar erro para nome vazio e array vazio para nome válido [BRANCH COVERAGE]", () => {
- 
-      const errors = WorkoutTemplateModel.validateTemplate({ name: "  " })
+  
+      const errors = WorkoutTemplateModel.validateTemplate({ name: "   " })
       expect(errors).toContain("Nome da ficha é obrigatório")
 
 
@@ -212,7 +227,7 @@ describe("WorkoutTemplateModelTest", () => {
       expect(valid).toHaveLength(0)
     })
 
- 
+  
     it("validateTemplateExercise: deve retornar array vazio para dados válidos [BRANCH COVERAGE]", () => {
 
       const valid = WorkoutTemplateModel.validateTemplateExercise(mockExercise)
