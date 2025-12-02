@@ -24,7 +24,7 @@ pipeline {
             post {
                 always {
                     echo "📁 Salvando relatórios..."
-                    junit 'junit.xml'               
+                    junit 'test-reports/junit.xml'             
                     archiveArtifacts 'coverage/**' 
                     archiveArtifacts artifacts: 'test-reports/junit.xml'
                 }
