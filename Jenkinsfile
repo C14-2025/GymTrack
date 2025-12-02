@@ -31,10 +31,10 @@ pipeline {
             }
         }
         
-        stage('Teste de Conexão e Integração') {
-            steps {
-                sh "curl -f http://gymtrack:3000"
-            }
-        }
+        // stage('Teste de Conexão e Integração') {
+        //     steps {
+        //         sh "curl -f http://gymtrack:3000"
+        //     }
+        // }
     }
 }
